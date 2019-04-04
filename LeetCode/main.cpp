@@ -220,6 +220,52 @@ public:
         
         return digits;
     }
+    
+    string addBinary(string a, string b) {
+        int i = (int)a.length() - 1;
+        int j = (int)b.length() - 1;
+        int plus = 0;
+        unsigned int value = 0b1;
+        string c = string();
+        while (i >= 0 && j >= 0) {
+            
+            int __i = a[i] - 48;
+            int __j = b[j] - 48;
+            
+            value = (value << 1) | (__i + __j + plus) % 2;
+            plus = (__i + __j + plus) / 2;
+            
+            i--;
+            j--;
+        }
+        
+        while (i >= 0) {
+            int __i = a[i] - 48;
+            value = (value << 1) | (__i + plus) % 2 ;
+            plus = (__i + plus) / 2;
+            if (plus == 0) {
+                //待优化
+//                return a.substr(0,i) + c;
+            }
+            i--;
+        }
+        
+        while (j >= 0) {
+            int __j = b[j] - 48;
+            value = (value << 1) | (__j + plus) % 2;
+            plus = (__j + plus) / 2;
+            if (plus == 0) {
+                //待优化
+//                return b.substr(0,j) + c;
+            }
+            j--;
+        }
+        
+        if (plus == 1) {
+            value = (value << 1) | 1;
+        }
+        return string();
+    }
 };
 
 
@@ -228,10 +274,16 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     Solution so;
     vector<string> strs = {"flower","flow","flight"};
-    vector<int> num1 = {1,2,3,0,0,0};
-    vector<int> num2 = {2,5,6};
+    vector<int> num1 = {1,0,0};
+    vector<int> num2 = {1,1,0,0,1,0};
 //    so.merge(num1, 3, num2, 3);
 //    so.longestCommonPrefix(strs);
-    so.plusOne(num1);
+//    so.plusOne(num1);
+    string ss = so.addBinary("100", "110010");
+    cout << ss;
+    
+    int i = string("1000")[1];
+    int x = 0b110000;
+    
     return 0;
 }
