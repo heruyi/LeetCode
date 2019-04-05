@@ -222,49 +222,40 @@ public:
     }
     
     string addBinary(string a, string b) {
-        int i = (int)a.length() - 1;
-        int j = (int)b.length() - 1;
-        int plus = 0;
-        unsigned int value = 0b1;
-        string c = string();
-        while (i >= 0 && j >= 0) {
-            
-            int __i = a[i] - 48;
-            int __j = b[j] - 48;
-            
-            value = (value << 1) | (__i + __j + plus) % 2;
-            plus = (__i + __j + plus) / 2;
-            
-            i--;
-            j--;
+        /**
+        string res = "";
+        int c = 0,i = (int)a.length()-1, j = (int)b.length() -1;
+        while (i >= 0 || j >= 0 || c == 1) {
+            c += i >= 0 ? a[i--] - '0' : 0;
+            c += j >= 0 ? b[j--] - '0' : 0;
+            res = char(c % 2 + '0') + res;
+            c /= 2;
         }
+        return res;
+        */
         
+        
+        if (a.length() < b.length()) {
+            a = string(b.length()-a.length(),'0') + a;
+        }else{
+            b = string(a.length()-b.length(),'0') + b;
+        }
+        int i = (int)a.length() - 1;
+        int plus = 0;
+        string c = "";
         while (i >= 0) {
             int __i = a[i] - 48;
-            value = (value << 1) | (__i + plus) % 2 ;
-            plus = (__i + plus) / 2;
-            if (plus == 0) {
-                //待优化
-//                return a.substr(0,i) + c;
-            }
+            int __j = b[i] - 48;
+            c = to_string((__i + __j + plus) % 2) + c;
+            plus = (__i + __j + plus) / 2;
             i--;
-        }
-        
-        while (j >= 0) {
-            int __j = b[j] - 48;
-            value = (value << 1) | (__j + plus) % 2;
-            plus = (__j + plus) / 2;
-            if (plus == 0) {
-                //待优化
-//                return b.substr(0,j) + c;
-            }
-            j--;
         }
         
         if (plus == 1) {
-            value = (value << 1) | 1;
+            c = "1" + c;
         }
-        return string();
+        return c;
+        
     }
 };
 
@@ -279,11 +270,12 @@ int main(int argc, const char * argv[]) {
 //    so.merge(num1, 3, num2, 3);
 //    so.longestCommonPrefix(strs);
 //    so.plusOne(num1);
-    string ss = so.addBinary("100", "110010");
+    string ss = so.addBinary("11", "1");
     cout << ss;
     
     int i = string("1000")[1];
     int x = 0b110000;
+    int k = 48;
     
     return 0;
 }

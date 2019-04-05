@@ -10,7 +10,7 @@
 #include <string>
 
 Person::Person(){
-    name = new char[3];
+    name = new char[4];
     strcpy(name, "C++");
     age = 20;
 }
