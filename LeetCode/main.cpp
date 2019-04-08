@@ -36,5 +36,6 @@ int main(int argc, const char * argv[]) {
     vector<int> v2 = {2,2};
 //    so.intersect(v1, v2);
     so.moveZeroes(v1);
+    so.myAtoi(" -42");
     return 0;
 }

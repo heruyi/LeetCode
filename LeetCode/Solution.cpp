@@ -335,6 +335,7 @@ int Solution::lengthOfLongestSubstring(string s){
     return size;
 }
 
+
 int Solution::singleNumber(vector<int>& nums) {
     int value = 0;
     for (int i=0; i<nums.size(); i++) {
@@ -422,4 +423,65 @@ void Solution::moveZeroes(vector<int>& nums) {
             break;
         }
     }
+}
+
+int Solution::myAtoi(string str){
+    if (str.size() == 0) {
+        return 0;
+    }
+    long value = 0;
+    
+    size_t index = 0;
+    while( (index = str.find(' ',index)) != string::npos){
+        str.erase(index,1);
+    }
+    
+    map<char,int> map = {{'0',0},
+        {'1',1},
+        {'2',2},
+        {'3',3},
+        {'4',4},
+        {'5',5},
+        {'6',6},
+        {'7',7},
+        {'8',8},
+        {'9',9},
+    };
+    
+    index = 0;
+    while (index < str.length()) {
+        
+        int it = (*map.find(str[index])).second;
+        if (map.find(str[index]) != map.end()) {
+            if (value == 0 && it == 0 && str[0] == '+') {
+                return 0;
+            }
+            value = value * 10 + it;
+            bool isSigned = str[0] == '-';
+            if (isSigned && -value < INT_MIN) {//负数
+                return INT_MIN;
+            }else if (value > INT_MAX){
+                return INT_MAX;
+            }
+        }else{
+            if (index == 0) {
+                if (str[0] != '-' && str[0] != '+') {
+                    return 0;
+                }
+            }
+            if (index != 0) {
+                
+                if (str[0] == '-') {
+                    return -(int)value;
+                }
+            
+                return (int)value;
+            }
+        }
+        index++;
+    }
+    
+    
+    return str[0] == '-' ? -(int)value : (int)value;
+
 }

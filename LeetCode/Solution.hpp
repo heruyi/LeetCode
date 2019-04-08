@@ -49,6 +49,9 @@ public:
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2);
     
     void moveZeroes(vector<int>& nums);
+
+    int myAtoi(string str);
+
 };
 
 #endif /* Solution_hpp */
