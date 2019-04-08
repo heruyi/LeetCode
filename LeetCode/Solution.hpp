@@ -43,6 +43,12 @@ public:
     int strStr(string haystack, string needle);
     
     int lengthOfLongestSubstring(string s);
+    
+    int singleNumber(vector<int>& nums);
+    
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2);
+    
+    void moveZeroes(vector<int>& nums);
 };
 
 #endif /* Solution_hpp */

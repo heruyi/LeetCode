@@ -199,6 +199,20 @@ void Solution::merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 }
 
 vector<int> Solution::plusOne(vector<int>& digits) {
+    
+    for (int i= (int)digits.size()-1; i>=0; i--) {
+        if (digits[i] == 9) {
+            digits[i] = 0;
+        }else{
+            digits[i]++;
+            return digits;
+        }
+    }
+    digits[0] = 1;//走到这里说明所有位都为9
+    digits.push_back(0);
+    
+    
+    /**
     bool allValueIs9 = true;
     for (vector<int>::iterator it = digits.begin(); it != digits.end(); it++) {
         if (*it != 9) {
@@ -222,6 +236,8 @@ vector<int> Solution::plusOne(vector<int>& digits) {
             }
         }
     }
+     
+     */
     
     return digits;
 }
@@ -317,4 +333,93 @@ int Solution::lengthOfLongestSubstring(string s){
     }
     
     return size;
+}
+
+int Solution::singleNumber(vector<int>& nums) {
+    int value = 0;
+    for (int i=0; i<nums.size(); i++) {
+        value = value ^ nums[i];
+    }
+    return value;
+}
+
+vector<int> Solution::intersect(vector<int>& nums1, vector<int>& nums2) {
+    
+    
+    vector<int> vt;
+    size_t n1Size = nums1.size();
+    size_t n2Size = nums2.size();
+    sort(nums1.begin(), nums1.end());
+    sort(nums2.begin(), nums2.end());
+    int i=0;
+    int j=0;
+    while (i<n1Size && j<n2Size) {
+        if (nums1[i] < nums2[j]) {
+            i++;
+        }else if(nums1[i] > nums2[j]){
+            j++;
+        }else{
+            vt.push_back(nums1[i]);
+            i++;
+            j++;
+        }
+    }
+
+    return vt;
+    
+    /**
+    
+    if (nums1.size() > nums2.size()) {
+        swap(nums1, nums2);
+    }
+    if (nums1.size() == 0 || nums2.size() == 0) {
+        return vector<int>();
+    }
+    
+    map<int,int> map = std::map<int,int>();
+    int size = (int)nums1.size();
+    vector<int> vt = vector<int>(size);
+    
+    for (int i=0; i<nums1.size(); i++) {
+        map[nums1[i]] = map[nums1[i]] + 1;
+    }
+    int index = 0;
+    for (int j=0; j<nums2.size(); j++) {
+        int va = nums2[j];
+        if (map[va] > 0) {
+            vt[index++] = va;
+            map[va] = map[va] - 1;
+            size--;
+            if (size == 0) {
+                return vt;
+            }
+        }
+    }
+    return vector<int>(vt.begin(), vt.begin()+index);
+     */
+}
+
+void Solution::moveZeroes(vector<int>& nums) {
+    int i=0;
+    int size = 0;
+    while (i<nums.size()) {
+        if (nums[i] != 0) {
+            i++;
+        }else{
+            int j = i+1;
+            while (j<nums.size()) {
+                if (nums[j] == 0) {
+                    j++;
+                }else{
+                    swap(nums[i], nums[j]);
+                    size++;
+                    break;
+                }
+            }
+            i++;
+        }
+        if (i == nums.size() - size) {
+            break;
+        }
+    }
 }
