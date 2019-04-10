@@ -451,7 +451,7 @@ int Solution::myAtoi(string str){
     index = 0;
     while (index < str.length()) {
         
-        int it = (*map.find(str[index])).second;
+        int it = map.find(str[index])->second;
         if (map.find(str[index]) != map.end()) {
             if (value == 0 && it == 0 && str[0] == '+') {
                 return 0;
@@ -484,4 +484,98 @@ int Solution::myAtoi(string str){
     
     return str[0] == '-' ? -(int)value : (int)value;
 
+}
+
+vector<int> Solution::twoSum(vector<int>& nums, int target){
+
+    vector<int> vt;
+    map<int, int> _map;
+    for (int i=0; i<nums.size(); i++) {
+        if (nums[i] == target) {
+            vt.push_back(i);
+            return vt;
+        }
+        int com = target - nums[i];
+        if (_map.find(com) != _map.end()) {
+            vt.push_back(_map[com]);
+            vt.push_back(i);
+            return vt;
+        }
+        _map[nums[i]] = i;
+    }
+    return vt;
+}
+
+bool Solution::isValidSudoku(vector<vector<string>>& board) {
+
+    for(int i=0;i<9;i++)
+        for(int j=0;j<9;j++)
+        {
+            if(board[i][j]==".")
+                continue;
+            for(int k=j+1;k<9;k++)
+                if(board[i][j]==board[i][k])
+                    return false;
+            for(int k=i+1;k<9;k++)
+                if(board[i][j]==board[k][j])
+                    return false;
+            for(int a=i+1;a<(i/3+1)*3;a++)
+            {
+                for(int b=j/3*3;b<j;b++)
+                    if(board[i][j]==board[a][b])
+                        return false;
+                for(int b=j+1;b<j/3*3+3;b++)
+                    if(board[i][j]==board[a][b])
+                        return false;
+            }
+        }
+    
+    return true;
+    
+    /**
+    vector<map<string,string>*> row = vector<map<string,string>*>();
+    vector<map<string,string>*> column = vector<map<string,string>*>();
+    vector<map<string,string>*> box = vector<map<string,string>*>();
+    
+    for (int i=0; i<9; i++) {
+        map<string,string> *_map = new map<string,string>();
+        row.push_back(_map);
+        for (int j=0; j<9; j++) {
+            string key = board[i][j];
+            if (key == ".") {
+                continue;
+            }
+            
+            int k = (i / 3) * 3 + j / 3;
+            
+            if (column.size() < 9 && column.size() == j) {
+                map<string,string> *_map = new map<string,string>();
+                column.push_back(_map);
+            }
+            if (box.size() == k && box.size() < 9) {
+                map<string,string> *_map = new map<string,string>();
+                box.push_back(_map);
+            }
+            
+            if (row[i]->find(key) != row[i]->end()) {
+                return false;
+            }else{
+                (*row[i]).insert(pair<string, string>(key, key));
+            }
+            if (column[j]->find(key) != column[j]->end()) {
+                return false;
+            }else{
+                column[j]->insert(pair<string, string>(key, key));
+            }
+            if (box[k]->find(key) != box[k]->end()) {
+                return false;
+            }else{
+                box[k]->insert(pair<string, string>(key, key));
+            }
+            
+        }
+    }
+    
+    return true;
+     */
 }

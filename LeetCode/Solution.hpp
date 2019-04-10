@@ -51,6 +51,10 @@ public:
     void moveZeroes(vector<int>& nums);
 
     int myAtoi(string str);
+    
+    vector<int> twoSum(vector<int>& nums, int target);
+    
+    bool isValidSudoku(vector<vector<string>>& board);
 
 };
 
