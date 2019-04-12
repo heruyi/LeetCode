@@ -529,7 +529,7 @@ bool Solution::isValidSudoku(vector<vector<string>>& board) {
                         return false;
             }
         }
-    
+
     return true;
     
     /**
@@ -578,4 +578,52 @@ bool Solution::isValidSudoku(vector<vector<string>>& board) {
     
     return true;
      */
+}
+
+void Solution::rotate(vector<vector<int>>& matrix){
+//    {24,4,38,2,21,18,33,40},
+//    {24,37,25,62,37,15,35,36},
+//    {42,23,13,58,17,26,19,8},
+//    {32,48,9,58,36,18,40,61},
+//    {23,16,0,46,35,34,23,60},
+//    {9,49,60,47,1,32,20,45},
+//    {56,34,40,11,61,60,20,30},
+//    {45,30,25,18,49,3,16,10}}
+    for (int i=0; i<matrix.size() / 2; i++) {
+        int max = (int)matrix.size() -i -1;
+        int dst_x=i,dst_y=i;
+        int src_x = i;
+        int src_y = max;
+        int size = (max-i+1);
+        int len =  0;
+        if (size == 2){
+            len = 4;
+        }else{
+            len = (size-1) * 4;
+        }
+        
+        int temp = matrix[i][i];
+        int count = 0;
+        while (count < len) {
+            if (src_x == i && src_y == i) {
+                matrix[dst_x][dst_y] = temp;
+            }
+            matrix[dst_x][dst_y] = matrix[src_x][src_y];
+            if (count / size == 0) {
+                dst_x++;
+                src_y--;
+            }else if(count / (max-i+1) == 1){
+                dst_y++;
+                src_x--;
+            }
+            else if(count / (max-i+1) == 1){
+                dst_x--;
+                src_y++;
+            }else{
+                dst_y++;
+                src_x--;
+            }
+            count++;
+        }
+    }
 }

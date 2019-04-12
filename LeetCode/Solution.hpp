@@ -55,6 +55,8 @@ public:
     vector<int> twoSum(vector<int>& nums, int target);
     
     bool isValidSudoku(vector<vector<string>>& board);
+    
+    void rotate(vector<vector<int>>& matrix);
 
 };
 
