@@ -57,6 +57,8 @@ public:
     bool isValidSudoku(vector<vector<string>>& board);
     
     void rotate(vector<vector<int>>& matrix);
+    
+    void reverseString(vector<char>& s);
 
 };
 

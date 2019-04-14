@@ -591,39 +591,77 @@ void Solution::rotate(vector<vector<int>>& matrix){
 //    {45,30,25,18,49,3,16,10}}
     for (int i=0; i<matrix.size() / 2; i++) {
         int max = (int)matrix.size() -i -1;
-        int dst_x=i,dst_y=i;
-        int src_x = i;
-        int src_y = max;
-        int size = (max-i+1);
-        int len =  0;
-        if (size == 2){
-            len = 4;
-        }else{
-            len = (size-1) * 4;
-        }
-        
-        int temp = matrix[i][i];
-        int count = 0;
-        while (count < len) {
-            if (src_x == i && src_y == i) {
-                matrix[dst_x][dst_y] = temp;
-            }
-            matrix[dst_x][dst_y] = matrix[src_x][src_y];
-            if (count / size == 0) {
-                dst_x++;
-                src_y--;
-            }else if(count / (max-i+1) == 1){
-                dst_y++;
-                src_x--;
-            }
-            else if(count / (max-i+1) == 1){
-                dst_x--;
-                src_y++;
-            }else{
-                dst_y++;
-                src_x--;
-            }
-            count++;
+    
+        for (int j=i; j<max; j++) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[max-j+i][i];
+            matrix[max-j+i][i] = matrix[max][max-j+i];
+            matrix[max][max-j+i] = matrix[j][max];
+            matrix[j][max] = temp;
         }
     }
 }
+
+void Solution::reverseString(vector<char>& s) {
+    int i=0,j=(int)s.size()-1;
+    while (i<j) {
+        int temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+bool isPalindrome(string s) {
+    
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    int i=0,j=(int)s.size()-1;
+    while (i<j) {
+        bool isChar_i = isalnum(s[i]);
+        if (!isChar_i) {
+            i++;
+        }
+        bool isChar_j = isalnum(s[j]);
+        if (!isChar_j) {
+            j--;
+        }
+        if (isChar_i && isChar_j) {
+            
+            if ((s[i] | 0b100000) == (s[j] | 0b100000)) {
+                i++;
+                j--;
+            }else{
+                return false;
+            }
+            
+        }
+    }
+    
+    return true;
+}
+
+bool isAnagram(string s, string t) {
+    
+    if (s.length() != t.length()) {
+        return false;
+    }
+    
+    int hash1[256]{0};
+    int hash2[256]{0};
+    
+    for (int i=0; i<s.length(); i++) {
+        hash1[s[i]]++;
+        hash2[t[i]]++;
+    }
+    
+    for (int i=0; i<256; i++) {
+
+        if (hash1[i] != hash2[i]) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
