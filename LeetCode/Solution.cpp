@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include <stack>
+#include <cmath>
 
 int Solution::removeElement(vector<int>& nums, int val){
     
@@ -613,7 +614,7 @@ void Solution::reverseString(vector<char>& s) {
     }
 }
 
-bool isPalindrome(string s) {
+bool Solution::isPalindrome(string s) {
     
     transform(s.begin(), s.end(), s.begin(), ::tolower);
     int i=0,j=(int)s.size()-1;
@@ -641,7 +642,7 @@ bool isPalindrome(string s) {
     return true;
 }
 
-bool isAnagram(string s, string t) {
+bool Solution::isAnagram(string s, string t) {
     
     if (s.length() != t.length()) {
         return false;
@@ -663,5 +664,42 @@ bool isAnagram(string s, string t) {
     }
     
     return true;
+}
+
+int Solution::reverse(int x) {
+    //321
+    long value = 0;
+    long min = -pow(2, 31);
+    long _min = INT_MIN;
+    long max = pow(2, 31) - 1;
+    
+    while (x != 0) {
+        value = value * 10 + x % 10;
+        x /= 10;
+        if (value < min || value > max) {
+            return 0;
+        }
+    }
+    
+    return (int)value;
+    
+}
+
+int Solution::firstUniqChar(string s) {
+    int idx = -1;
+    int array['z'+1]{0};
+    
+    map<char,int> map {};
+    int j=0;
+    for (auto& v : s){
+        array[v]++;
+        map[v] = j++;
+    }
+    for (auto& v : s) {
+        if (array[v] == 1) {
+            return map[v];
+        }
+    }
+    return idx;
 }
 

@@ -59,6 +59,14 @@ public:
     void rotate(vector<vector<int>>& matrix);
     
     void reverseString(vector<char>& s);
+    
+    bool isPalindrome(string s);
+    
+    bool isAnagram(string s, string t);
+    
+    int reverse(int x);
+    
+    int firstUniqChar(string s);
 
 };
 
