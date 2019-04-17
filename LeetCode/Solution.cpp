@@ -606,9 +606,9 @@ void Solution::rotate(vector<vector<int>>& matrix){
 void Solution::reverseString(vector<char>& s) {
     int i=0,j=(int)s.size()-1;
     while (i<j) {
-        int temp = s[i];
-        s[i] = s[j];
-        s[j] = temp;
+        if (s[i] != s[j])
+            swap(s[i], s[j]);
+        
         i++;
         j--;
     }
@@ -670,7 +670,6 @@ int Solution::reverse(int x) {
     //321
     long value = 0;
     long min = -pow(2, 31);
-    long _min = INT_MIN;
     long max = pow(2, 31) - 1;
     
     while (x != 0) {
@@ -703,3 +702,34 @@ int Solution::firstUniqChar(string s) {
     return idx;
 }
 
+ListNode* Solution::removeNthFromEnd(ListNode* head, int n) {
+    
+    ListNode _head = ListNode(0);
+    _head.next = head;
+    
+    ListNode *_pp = head;
+    for (int i=0; i<n; i++) {
+        head = head->next;
+    }
+    
+    while (head != NULL) {
+        _pp = _pp->next;
+        head = head->next;
+    }
+    
+    
+    _pp->next = _pp->next->next;
+    
+    return _head.next;
+}
+
+ListNode* Solution::reverseList(ListNode* head) {
+    ListNode *list = new ListNode(0);
+    while (head != NULL) {
+        ListNode *next = new ListNode(head->val);
+        next->next = list->next;
+        list->next = next;
+        head = head->next;
+    }
+    return list->next;
+}

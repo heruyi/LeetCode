@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <map>
 using namespace std;
 
 struct ListNode {
@@ -67,6 +68,11 @@ public:
     int reverse(int x);
     
     int firstUniqChar(string s);
+
+    ListNode* removeNthFromEnd(ListNode* head, int n);
+    
+    ListNode* reverseList(ListNode* head);
+
 
 };
 

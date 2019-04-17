@@ -14,14 +14,20 @@
 #include "Solution.hpp"
 using namespace std;
 
+void mystery(int n){
+    n += 5;
+    n /= 10;
+    printf("%s\n","**********" + 10 - n);
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
     Solution so;
-  
     so.firstUniqChar("leetcode");
-    
+    mystery(49);
+
+
     return 0;
 }
 
