@@ -73,7 +73,7 @@ public:
     
     ListNode* reverseList(ListNode* head);
 
-
+    bool isPalindrome(ListNode* head);
 };
 
 #endif /* Solution_hpp */

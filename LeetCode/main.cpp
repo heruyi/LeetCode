@@ -26,7 +26,13 @@ int main(int argc, const char * argv[]) {
     Solution so;
     so.firstUniqChar("leetcode");
     mystery(49);
-
+    
+    ListNode *head = new ListNode(0);
+    head->next =  new ListNode(1);
+    head->next->next = new ListNode(0);
+    head->next->next->next = new ListNode(1);
+//    head->next->next->next->next = new ListNode(1);
+    so.isPalindrome(head->next);
 
     return 0;
 }

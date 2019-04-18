@@ -733,3 +733,64 @@ ListNode* Solution::reverseList(ListNode* head) {
     }
     return list->next;
 }
+
+bool Solution::isPalindrome(ListNode* head) {
+    //判断链表是否回文
+    if (head == NULL) {
+        return false;
+    }
+    
+    if (head->next == NULL) {
+        return true;
+    }
+    if (head->next->next == NULL) {
+        return head->val == head->next->val;
+    }
+    
+    ListNode *prev = NULL;
+    ListNode *fast = head;
+    ListNode *slow = head;
+    bool odd = true;//奇数
+    while (fast != NULL) {
+        odd = fast->next == NULL;
+        if (odd) {
+            fast = NULL;
+            break;
+        }else{
+            fast = fast->next->next;
+        }
+        
+        ListNode *temp = slow->next;
+        slow->next = prev;
+        prev = slow;
+        slow = temp;
+        
+        if (fast == NULL) {
+            break;
+        }
+        if (fast->next == NULL) {
+            odd = true;
+            break;
+        }
+    }
+    
+    ListNode *h1 = NULL;
+    ListNode *h2 = NULL;
+    
+    if (odd) {
+        h1 = slow->next;
+        h2 = prev;
+    }else{
+        h1 = slow;
+        h2 = prev;
+    }
+    while (h1 != NULL && h2 != NULL) {
+        if (h1->val != h2->val) {
+            return false;
+        }
+        h1 = h1->next;
+        h2 = h2->next;
+    }
+    
+    return true;
+}
