@@ -74,6 +74,8 @@ public:
     ListNode* reverseList(ListNode* head);
 
     bool isPalindrome(ListNode* head);
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists);
 };
 
 #endif /* Solution_hpp */

@@ -794,3 +794,44 @@ bool Solution::isPalindrome(ListNode* head) {
     
     return true;
 }
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    
+    int size = (int)lists.size();
+    if (size == 0) {
+        return nullptr;
+    }
+    while (size > 1) {
+        int j=0;
+        for (int k=0; k<size; k+=2) {
+            ListNode *head = new ListNode(0);
+            ListNode *current = head;
+            ListNode *l1 = lists[k];
+            ListNode *l2 = nullptr;
+            if (k < size-1) {
+                l2 = lists[k+1];
+            }
+            while (l1 != nullptr && l2 != nullptr) {
+                if ((l1->val) < (l2->val)) {
+                    current->next = l1;
+                    current = l1;
+                    l1 = l1->next;
+                }else{
+                    current->next = l2;
+                    current = l2;
+                    l2 = l2->next;
+                }
+            }
+            if (l1 != nullptr) {
+                current->next = l1;
+            }
+            if (l2 != nullptr) {
+                current->next = l2;
+            }
+            lists[j] = head->next;
+            j++;
+        }
+        size = j;
+    }
+    return lists[0];
+}
