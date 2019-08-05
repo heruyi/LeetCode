@@ -20,6 +20,13 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL){}
+};
+
 class Solution {
 
 public:
@@ -76,6 +83,9 @@ public:
     bool isPalindrome(ListNode* head);
     
     ListNode* mergeKLists(vector<ListNode*>& lists);
+    
+    //35. 搜索插入位置
+    int searchInsert(vector<int>& nums, int target);
 };
 
 #endif /* Solution_hpp */

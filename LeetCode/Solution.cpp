@@ -11,6 +11,7 @@
 #include <map>
 #include <stack>
 #include <cmath>
+#include <search.h>
 
 int Solution::removeElement(vector<int>& nums, int val){
     
@@ -724,6 +725,7 @@ ListNode* Solution::removeNthFromEnd(ListNode* head, int n) {
 }
 
 ListNode* Solution::reverseList(ListNode* head) {
+    /**
     ListNode *list = new ListNode(0);
     while (head != NULL) {
         ListNode *next = new ListNode(head->val);
@@ -732,6 +734,17 @@ ListNode* Solution::reverseList(ListNode* head) {
         head = head->next;
     }
     return list->next;
+     */
+    ListNode *prew = nullptr;
+    ListNode *current = prew;
+    while (head != nullptr) {
+        ListNode *temp = head->next;
+        head->next = prew;
+        prew = head;
+        current = prew;
+        head = temp;
+    }
+    return current;
 }
 
 bool Solution::isPalindrome(ListNode* head) {
@@ -829,9 +842,273 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
                 current->next = l2;
             }
             lists[j] = head->next;
+            delete head;
             j++;
         }
         size = j;
     }
     return lists[0];
+}
+
+int hammingWeight(uint32_t n) {
+    int count = 0;
+    while (n > 0) {
+        if ( (n & 1) == 1) {
+            count++;
+        }
+        n >>= 1;
+    }
+    return count;
+}
+
+bool isBadVersion(long version);
+
+int firstBadVersion(int n) {
+    long start = 1;
+    long end = (long)n+1;
+    
+    while (start < end) {
+        long mid = (start + end) / 2;
+        if (isBadVersion(mid)) {
+            if (!isBadVersion(mid-1)) {
+                return (int)mid;
+            }
+            end = mid;
+        }else{
+            start = mid;
+        }
+    }
+    return (int)start;
+}
+
+//35. 搜索插入位置
+int Solution::searchInsert(vector<int>& nums, int target) {
+    
+    int size = (int)nums.size();
+    if (nums[size-1] < target) {
+        return size;
+    }
+    
+    int left = 0, right = size-1;
+    while (left < right) {
+        int mid = left +(right - left) / 2;
+        if (nums[mid] < target) {
+            left = mid + 1;
+        }else{
+            right = mid;
+        }
+    }
+    
+    return left;
+}
+
+ListNode* deleteDuplicates(ListNode* head) {
+    ListNode *_head = head;
+    while (head != NULL && head->next != NULL) {
+        if (head->val == head->next->val) {
+            head->next = head->next->next;
+        }else{
+            head = head->next;
+        }
+    }
+    return _head;
+}
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (p == NULL && q == NULL) {
+        return true;
+    }
+    if (p == NULL || q == NULL) {
+        return false;
+    }
+    if (q->val != p->val) {
+        return false;
+    }
+    return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+}
+
+
+
+void sortColors(vector<int>& nums) {
+    
+    long i=0,j=nums.size()-1,k=0;
+    while (i<=j) {
+        if (nums[i] == 0) {
+            swap(nums[i], nums[k]);
+            i++;
+            k++;
+            continue;
+        }
+        if (nums[i] == 2) {
+            if (nums[j] == 2) {
+                j--;
+                continue;
+            }
+            swap(nums[i], nums[j]);
+            j--;
+            continue;
+        }
+        i++;
+    }
+    
+}
+
+vector<string> fizzBuzz(int n) {
+    vector<string> *strings = new vector<string>(n);
+    int i=1;
+    while (i<=n) {
+        if (i % 3 == 0 && i % 5 == 0) {
+            (*strings)[i-1] = "FizzBuzz";
+        }else if (i % 3 == 0) {
+            (*strings)[i-1] = "Fizz";
+        }else if (i % 5 == 0){
+            (*strings)[i-1] = "Buzz";
+        }else{
+            (*strings)[i-1] = to_string(i);
+        }
+        
+        i++;
+    }
+    return *strings;
+}
+
+int hammingDistance(int x, int y) {
+    int c = 0, i = x ^ y;
+    while (i) {
+        if (i & 1) {
+            c++;
+        }
+        i >>= 1;
+    }
+    return c;
+}
+
+int findContentChildren(vector<int>& g, vector<int>& s) {
+    sort(g.begin(), g.end());
+    sort(s.begin(), s.end());
+    
+    int ig=0,sg=0;
+    int c = 0;
+    while (ig < g.size() && sg < s.size()) {
+        if (g[ig] <= s[sg]) {
+            c++;
+            ig++;
+            sg++;
+        }else{
+            sg++;
+        }
+    }
+    return c;
+}
+
+int islandPerimeter(vector<vector<int>>& grid) {
+    
+    int i=0,s=0;
+    while (i < grid.size()) {
+        int j=0;
+        while (j < grid[i].size()) {
+            
+            if (grid[i][j] == 1) {
+                s += 4;
+                if (j > 0 && grid[i][j-1] == 1) {
+                    s -= 2;
+                }
+                if (i > 0 && grid[i-1][j] == 1) {
+                    s -= 2;
+                }
+            }
+            
+            j++;
+        }
+        i++;
+    }
+    return s;
+}
+
+int maxSubArray(vector<int>& nums) {
+    int i=0,sum=0,_max = nums[0];
+    while (i<nums.size()) {
+        if (sum > 0) {
+            sum += nums[i];
+        }else{
+            sum = nums[i];
+        }
+        _max = max(sum,_max);
+        i++;
+    }
+    return _max;
+}
+
+//int mySqrt(int x) {
+//    int i=0,j=x;
+//    while (i<j) {
+//        int mid = (j+i) / 2;
+//        if (mid * mid < x && (mid+1)*(mid+1) > x) {
+//            return mid;
+//        }
+//
+//    }
+//    return 0;
+//}
+
+uint32_t reverseBits(uint32_t n) {
+    uint32_t i = 0;
+    int j = 32;
+    while (j--) {
+        i <<= 1;
+        i += (n & 1);
+        n >>= 1;
+    }
+    return i;
+}
+
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> *soc = new vector<vector<int>>(numRows);
+    for (int i=0; i<numRows; i++) {
+        vector<int> *v = new vector<int>(i+1);
+        for (int j=0; j<=i; j++) {
+            if (i<2) {
+                (*v)[j] = 1;
+            }else{
+                if (j==0 || j==i) {
+                    (*v)[j] = 1;
+                }else{
+                    vector<int> *p = &(*soc)[i-1];
+                    (*v)[j] = (*p)[j-1] + (*p)[j];
+                }
+            }
+        }
+        (*soc)[i] = *v;
+    }
+    
+    return *soc;
+}
+
+int missingNumber(vector<int>& nums) {
+    int i = 0,j=(int)nums.size(),res = 0;
+    while (i<j) {
+        res ^= i;
+        res ^= nums[i];
+        i++;
+    }
+    res ^= j;
+    return res;
+}
+
+int lengthOfLastWord(string s) {
+    
+    int end = (int)s.length() - 1;
+    
+    while (end >= 0 && s[end] == ' ') {
+        end--;
+    }
+    if (end < 0) {
+        return 0;
+    }
+    int start = end;
+    while (start >= 0 && s[start] != ' ') {
+        start--;
+    }
+    return end - start;
+    
 }
