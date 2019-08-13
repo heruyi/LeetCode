@@ -27,6 +27,13 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL){}
 };
 
+struct CharTreeNode {
+    char val;
+    CharTreeNode *left;
+    CharTreeNode *right;
+    CharTreeNode(char x) : val(x), left(NULL), right(NULL){}
+};
+
 class Solution {
 
 public:
@@ -86,6 +93,51 @@ public:
     
     //35. 搜索插入位置
     int searchInsert(vector<int>& nums, int target);
+    
+    ListNode* deleteDuplicates(ListNode* head);
+    
+    bool isSameTree(TreeNode* p, TreeNode* q);
+    
+    void sortColors(vector<int>& nums);
+    
+    vector<string> fizzBuzz(int n);
+    
+    int hammingDistance(int x, int y);
+    
+    int findContentChildren(vector<int>& g, vector<int>& s);
+    
+    int islandPerimeter(vector<vector<int>>& grid);
+    
+    int maxSubArray(vector<int>& nums);
+    
+    uint32_t reverseBits(uint32_t n);
+    
+    vector<vector<int>> generate(int numRows);
+    
+    int missingNumber(vector<int>& nums);
+    
+    int lengthOfLastWord(string s);
+    
+    int minDepth(TreeNode* root);
+    
+    int maxDepth(TreeNode* root);
+    
+    bool isBalanced(TreeNode* root);
+    
+    vector<vector<int>> levelOrderBottom(TreeNode* root);
+    
+    TreeNode* sortedArrayToBST(vector<int>& nums,int start,int end);
+    
+    TreeNode* sortedArrayToBST(vector<int>& nums);
+    
+    void preOrderWithoutRecursion(TreeNode *root);
+    
+    bool hasPathSum(TreeNode* root, int sum);
+    
+    vector<int> getRow(int rowIndex);
+    
+    //121 买卖股票的最佳时机
+    int maxProfit(vector<int>& prices);
 };
 
 #endif /* Solution_hpp */

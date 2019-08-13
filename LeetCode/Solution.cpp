@@ -12,6 +12,7 @@
 #include <stack>
 #include <cmath>
 #include <search.h>
+#include <iostream>
 
 int Solution::removeElement(vector<int>& nums, int val){
     
@@ -861,25 +862,25 @@ int hammingWeight(uint32_t n) {
     return count;
 }
 
-bool isBadVersion(long version);
-
-int firstBadVersion(int n) {
-    long start = 1;
-    long end = (long)n+1;
-    
-    while (start < end) {
-        long mid = (start + end) / 2;
-        if (isBadVersion(mid)) {
-            if (!isBadVersion(mid-1)) {
-                return (int)mid;
-            }
-            end = mid;
-        }else{
-            start = mid;
-        }
-    }
-    return (int)start;
-}
+//bool isBadVersion(long version);
+//
+//int firstBadVersion(int n) {
+//    long start = 1;
+//    long end = (long)n+1;
+//
+//    while (start < end) {
+//        long mid = (start + end) / 2;
+//        if (isBadVersion(mid)) {
+//            if (!isBadVersion(mid-1)) {
+//                return (int)mid;
+//            }
+//            end = mid;
+//        }else{
+//            start = mid;
+//        }
+//    }
+//    return (int)start;
+//}
 
 //35. 搜索插入位置
 int Solution::searchInsert(vector<int>& nums, int target) {
@@ -902,7 +903,7 @@ int Solution::searchInsert(vector<int>& nums, int target) {
     return left;
 }
 
-ListNode* deleteDuplicates(ListNode* head) {
+ListNode* Solution::deleteDuplicates(ListNode* head) {
     ListNode *_head = head;
     while (head != NULL && head->next != NULL) {
         if (head->val == head->next->val) {
@@ -914,7 +915,7 @@ ListNode* deleteDuplicates(ListNode* head) {
     return _head;
 }
 
-bool isSameTree(TreeNode* p, TreeNode* q) {
+bool Solution::isSameTree(TreeNode* p, TreeNode* q) {
     if (p == NULL && q == NULL) {
         return true;
     }
@@ -929,7 +930,7 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
 
 
 
-void sortColors(vector<int>& nums) {
+void Solution::sortColors(vector<int>& nums) {
     
     long i=0,j=nums.size()-1,k=0;
     while (i<=j) {
@@ -953,7 +954,7 @@ void sortColors(vector<int>& nums) {
     
 }
 
-vector<string> fizzBuzz(int n) {
+vector<string> Solution::fizzBuzz(int n) {
     vector<string> *strings = new vector<string>(n);
     int i=1;
     while (i<=n) {
@@ -972,7 +973,7 @@ vector<string> fizzBuzz(int n) {
     return *strings;
 }
 
-int hammingDistance(int x, int y) {
+int Solution::hammingDistance(int x, int y) {
     int c = 0, i = x ^ y;
     while (i) {
         if (i & 1) {
@@ -983,7 +984,7 @@ int hammingDistance(int x, int y) {
     return c;
 }
 
-int findContentChildren(vector<int>& g, vector<int>& s) {
+int Solution::findContentChildren(vector<int>& g, vector<int>& s) {
     sort(g.begin(), g.end());
     sort(s.begin(), s.end());
     
@@ -1001,7 +1002,7 @@ int findContentChildren(vector<int>& g, vector<int>& s) {
     return c;
 }
 
-int islandPerimeter(vector<vector<int>>& grid) {
+int Solution::islandPerimeter(vector<vector<int>>& grid) {
     
     int i=0,s=0;
     while (i < grid.size()) {
@@ -1025,7 +1026,7 @@ int islandPerimeter(vector<vector<int>>& grid) {
     return s;
 }
 
-int maxSubArray(vector<int>& nums) {
+int Solution::maxSubArray(vector<int>& nums) {
     int i=0,sum=0,_max = nums[0];
     while (i<nums.size()) {
         if (sum > 0) {
@@ -1051,7 +1052,7 @@ int maxSubArray(vector<int>& nums) {
 //    return 0;
 //}
 
-uint32_t reverseBits(uint32_t n) {
+uint32_t Solution::reverseBits(uint32_t n) {
     uint32_t i = 0;
     int j = 32;
     while (j--) {
@@ -1062,7 +1063,7 @@ uint32_t reverseBits(uint32_t n) {
     return i;
 }
 
-vector<vector<int>> generate(int numRows) {
+vector<vector<int>> Solution::generate(int numRows) {
     vector<vector<int>> *soc = new vector<vector<int>>(numRows);
     for (int i=0; i<numRows; i++) {
         vector<int> *v = new vector<int>(i+1);
@@ -1084,7 +1085,7 @@ vector<vector<int>> generate(int numRows) {
     return *soc;
 }
 
-int missingNumber(vector<int>& nums) {
+int Solution::missingNumber(vector<int>& nums) {
     int i = 0,j=(int)nums.size(),res = 0;
     while (i<j) {
         res ^= i;
@@ -1095,7 +1096,7 @@ int missingNumber(vector<int>& nums) {
     return res;
 }
 
-int lengthOfLastWord(string s) {
+int Solution::lengthOfLastWord(string s) {
     
     int end = (int)s.length() - 1;
     
@@ -1111,4 +1112,226 @@ int lengthOfLastWord(string s) {
     }
     return end - start;
     
+}
+
+int Solution::minDepth(TreeNode* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+    int len = 0;
+    deque<TreeNode *> queue;
+    TreeNode *lastNode = root;
+    queue.push_back(root);
+    while (!queue.empty()) {
+        TreeNode *p = queue.front();
+        queue.pop_front();
+        if (p->left == nullptr && p->right == nullptr) {
+            len++;
+            break;
+        }
+        if (p->left != nullptr) {
+            queue.push_back(p->left);
+        }
+        if (p->right != nullptr) {
+            queue.push_back(p->right);
+        }
+        if (p == lastNode) {
+            len++;
+            lastNode = queue.back();
+        }
+    }
+    return len;
+}
+
+int Solution::maxDepth(TreeNode* root) {
+    
+    if (root == nullptr) {
+        return 0;
+    }
+//    return 1 + max(maxDepth(root->left), maxDepth(root->right));
+    std::deque<TreeNode*> q;
+    q.push_back(root);
+    TreeNode *lastNode = root;
+    int height = 0;
+    while (!q.empty()) {
+        TreeNode *p = q.front();
+        q.pop_front();
+        if (p->left != nullptr) {
+            q.push_back(p->left);
+        }
+        if (p->right != nullptr) {
+            q.push_back(p->right);
+        }
+        
+        if (p == lastNode) {
+            height++;
+            lastNode = q.back();
+        }
+    }
+    return height;
+}
+
+bool Solution::isBalanced(TreeNode* root) {
+    if(root == nullptr)
+        return true;
+    
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+    bool balanced = (abs(left - right) <= 1);
+    return balanced && isBalanced(root->left) && isBalanced(root->right);
+}
+
+vector<vector<int>> Solution::levelOrderBottom(TreeNode* root) {
+    vector<vector<int>> p;
+    if (root == nullptr) {
+        	return p;
+    }
+    
+    vector<int> floot;
+    deque<TreeNode *> queue;
+    queue.push_back(root);
+    TreeNode *lastNode = root;
+    while (!queue.empty()) {
+        TreeNode *u = queue.front();
+        floot.push_back(u->val);
+        queue.pop_front();
+        if (u->left != nullptr) {
+            queue.push_back(u->left);
+        }
+        if (u->right != nullptr) {
+            queue.push_back(u->right);
+        }
+        if (u == lastNode) {
+            p.push_back(floot);
+            floot.clear();
+            lastNode = queue.back();
+        }
+    }
+    ::reverse(p.begin(), p.end());
+    return p;
+}
+
+TreeNode* Solution::sortedArrayToBST(vector<int>& nums,int start,int end) {
+    if (start == end) {
+        return nullptr;
+    }
+    
+    int mid = start + (end - start) / 2;
+    TreeNode *node = new TreeNode(nums[mid]);
+    node->left = sortedArrayToBST(nums, 0, mid);
+    node->right = sortedArrayToBST(nums, mid+1, end);
+    return node;
+}
+
+TreeNode* Solution::sortedArrayToBST(vector<int>& nums) {
+    return sortedArrayToBST(nums, 0, (int)nums.size());
+}
+
+void Solution::preOrderWithoutRecursion(TreeNode *root){
+    if (root == nullptr) {
+        return;
+    }
+    TreeNode *currentNode = root;
+    stack<TreeNode*> stack;
+    
+    while (currentNode != nullptr || !stack.empty()) {
+        /** 前序遍历
+        if (currentNode) {
+            stack.push(currentNode);
+            cout << currentNode->val << " ";
+            currentNode = currentNode->left;
+        }else{
+            currentNode = stack.top()->right;
+            stack.pop();
+        }
+         */
+        /**
+         * 中序遍历
+         */
+        if (currentNode) {
+            stack.push(currentNode);
+            currentNode = currentNode->left;
+        }else{
+            TreeNode *node = stack.top();
+            cout << node->val << " ";
+            currentNode = node->right;
+            stack.pop();
+        }
+    }
+    
+}
+
+bool Solution::hasPathSum(TreeNode* root, int sum) {
+    if(root == nullptr || root->val > sum){
+        return false;
+    }
+    
+    stack<TreeNode*>  node_stack;
+    stack<int>  sum_stack;
+    node_stack.push(root);
+    sum_stack.push(sum - root->val);
+    while (!node_stack.empty()) {
+        TreeNode *currentNode = node_stack.top();
+        int currentSum = sum_stack.top();
+        node_stack.pop();
+        sum_stack.pop();
+        if (currentNode->left == nullptr && currentNode->right == nullptr && currentSum == 0) {
+            return true;
+        }
+        if (currentNode->left != nullptr) {
+            node_stack.push(currentNode->left);
+            sum_stack.push(currentSum - currentNode->left->val);
+        }
+        if (currentNode->right != nullptr) {
+            node_stack.push(currentNode->right);
+            sum_stack.push(currentSum - currentNode->right->val);
+        }
+    }
+    
+    return false;
+}
+
+vector<int> Solution::getRow(int rowIndex) {
+    
+    deque<int>q;
+    if (rowIndex == 0) {
+        q.push_front(1);
+        return vector<int>(q.begin(),q.end());
+    }
+    if (rowIndex == 1) {
+        q.push_front(1);
+        q.push_front(1);
+        vector<int>(q.begin(),q.end());
+    }
+    
+    int i = 2;
+    q.push_front(1);
+    q.push_front(1);
+    while (i < rowIndex+1) {
+        for (int k=0; k<q.size()-1; k++) {
+            if(k==i)
+                continue;
+            else{
+                q[k] = q[k] + q[k+1];
+            }
+        }
+        q.push_front(1);
+        i++;
+    }
+    return vector<int>(q.begin(),q.end());
+}
+
+int Solution::maxProfit(vector<int>& prices) {
+    
+    int minPrice = INT_MAX;
+    int maxProfit = 0;
+
+    for (int i=0; i<prices.size(); i++) {
+        if (prices[i] < minPrice) {
+            minPrice = prices[i];
+        }else if (prices[i] - minPrice > maxProfit){
+            maxProfit = prices[i] - minPrice;
+        }
+    }
+    return maxProfit;
 }

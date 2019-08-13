@@ -20,20 +20,44 @@ void mystery(int n){
     printf("%s\n","**********" + 10 - n);
 }
 
+void ProOrderTraverse(TreeNode *tree)
+{
+    if (tree == NULL)
+        return;
+    cout << tree->val << " ";
+    ProOrderTraverse(tree->left);
+    ProOrderTraverse(tree->right);
+}
+
+void preOrderTraverse2(TreeNode *root){
+    
+    stack<TreeNode *> stack;
+    TreeNode *pNode = root;
+    while (pNode != NULL || !stack.empty()) {
+        if (pNode != NULL) {
+            cout << pNode->val << " ";
+            stack.push(pNode);
+            pNode = pNode->left;
+        }else{
+            TreeNode *node = stack.top();
+            pNode = node->right;
+            stack.pop();
+        }
+    }
+}
+
+
+
 int main(int argc, const char * argv[]) {
     // insert code here...
+    
     std::cout << "Hello, World!\n";
     Solution so;
-    so.firstUniqChar("leetcode");
-    mystery(49);
-    
-    ListNode *head = new ListNode(0);
-    head->next =  new ListNode(1);
-    head->next->next = new ListNode(0);
-    head->next->next->next = new ListNode(1);
-//    head->next->next->next->next = new ListNode(1);
-    so.isPalindrome(head->next);
-
+    vector<int> vector = {2,4,1};
+    so.maxProfit(vector);
     return 0;
 }
+
+
+
 
