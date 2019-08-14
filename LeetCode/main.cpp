@@ -55,6 +55,8 @@ int main(int argc, const char * argv[]) {
     Solution so;
     vector<int> vector = {2,4,1};
     so.maxProfit(vector);
+
+    
     return 0;
 }
 

@@ -489,6 +489,7 @@ int Solution::myAtoi(string str){
 
 }
 
+//无序数组
 vector<int> Solution::twoSum(vector<int>& nums, int target){
 
     vector<int> vt;
@@ -1334,4 +1335,79 @@ int Solution::maxProfit(vector<int>& prices) {
         }
     }
     return maxProfit;
+}
+
+bool Solution::hasCycle(ListNode *head) {
+    /** hash
+    map<ListNode*,ListNode*> map;
+    while (head != nullptr) {
+        if (map.at(head) != nullptr) {
+            return true;
+        }
+        map[head] = head;
+        head = head->next;
+    }
+    return false;
+     */
+    
+    ListNode *slow = head;
+    ListNode *fast = head->next;
+    while (fast && fast->next) {
+        if (slow == fast) {
+            return true;
+        }
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return false;
+}
+
+ListNode * Solution::getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if (headA == nullptr || headB == nullptr) {
+        return nullptr;
+    }
+    
+    ListNode *a = headA;
+    ListNode *b = headB;
+    while (a != b) {
+        a = a == nullptr ? headB : a->next;
+        b = b == nullptr ? headA : b->next;
+    }
+    return a;
+}
+
+// 升序数组
+vector<int> twoSum(vector<int>& numbers, int target) {
+    /** 二分法
+    for (int i=0; i<numbers.size(); i++) {
+        int start = i+1;
+        int end = (int)numbers.size() - 1;
+        int num = target - numbers[i];
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (numbers[mid] == num) {
+                return vector<int>{i+1,mid+1};
+            }else if (numbers[mid] < num){
+                start = mid + 1;
+            }else{
+                end = mid - 1;
+            }
+        }
+    }
+     */
+    
+    /** 双指针法*/
+    int start = 0;
+    int end = (int)numbers.size() - 1;
+    while (start < end) {
+        if (numbers[start] + numbers[end] == target) {
+            return vector<int>{start+1,end+1};
+        }else if (numbers[start] + numbers[end] < target){
+            start++;
+        }else{
+            end--;
+        }
+    }
+
+    return vector<int>{-1,-1};
 }

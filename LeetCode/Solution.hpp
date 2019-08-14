@@ -138,6 +138,10 @@ public:
     
     //121 买卖股票的最佳时机
     int maxProfit(vector<int>& prices);
+    //141 环形链表
+    bool hasCycle(ListNode *head);
+    //160 相交链表
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
 };
 
 #endif /* Solution_hpp */
