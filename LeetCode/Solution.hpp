@@ -142,6 +142,16 @@ public:
     bool hasCycle(ListNode *head);
     //160 相交链表
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
+    ///168 Excel表列名称
+    string convertToTitle(int n);
+    ///169 求众数
+    int majorityElement(vector<int>& nums);
+    ///171.Excel表列序号
+    int titleToNumber(string s);
+    ///198 打家劫舍
+    int rob(vector<int>& nums);
+    ///203 移除链表元素
+    ListNode* removeElements(ListNode* head, int val);
 };
 
 #endif /* Solution_hpp */

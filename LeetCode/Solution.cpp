@@ -9,6 +9,7 @@
 #include "Solution.hpp"
 #include <string>
 #include <map>
+
 #include <stack>
 #include <cmath>
 #include <search.h>
@@ -1410,4 +1411,129 @@ vector<int> twoSum(vector<int>& numbers, int target) {
     }
 
     return vector<int>{-1,-1};
+}
+
+string Solution::convertToTitle(int n) {
+    vector<char> ch = {'a',
+        'A','B','C','D','E','F','G',
+        'H','I','J','K','L','M','N',
+        'O','P','Q','R','S','T',
+        'U','V','W','X','Y','Z'
+    };
+    string str;
+    while (n / 26) {
+        int x = n / 26;
+        int y = n % 26;
+        if (y == 0) {
+            x -= 1;
+            str.insert(str.begin(), 'Z');
+        }else{
+            str.insert(str.begin(), ch[y]);
+        }
+        n = x;
+    }
+    if (n) {
+        str.insert(str.begin(), ch[n]);
+    }
+    return str;
+}
+
+int Solution::majorityElement(vector<int>& nums) {
+    /**
+    if (nums.size() == 1) {
+        return nums[0];
+    }
+    int val = (int)nums.size() / 2;
+    map<int, int> map;
+    int i = (int)nums.size()-1;
+    while (i >= 0) {
+        int x = nums[i];
+        if (map.find(x) != map.end()) {
+            map[x] = map[x] + 1;
+            if (map[x] > val) {
+                return x;
+            }
+        }else{
+            map[x] = 1;
+        }
+        i--;
+    }
+    return -1;
+     */
+    
+    /** 摩尔投票法 */
+    int condetion = 0;
+    int count = 0;
+    for (int i=0; i<nums.size(); i++) {
+        if (count == 0) {
+            condetion = nums[i];
+        }
+        count += (condetion == nums[i]) ? 1 : -1;
+    }
+    return condetion;
+}
+
+int Solution::titleToNumber(string s) {
+    s = "ZZ";
+    int i=0;
+    int res = s[i] - 'A' + 1;
+    while (s[++i] != '\0') {
+        res *= 26;
+        res += s[i] - 'A' + 1;
+    }
+    return res;
+}
+
+    //198 打家劫舍 f(x) = max(f(x-2)+x,f(x-1));
+int rob(vector<int>& nums) {
+    if (nums.size() == 1) {
+        return nums[0];
+    }
+    if (nums.size() == 0) {
+        return 0;
+    }
+    vector<int> dp = vector<int>(nums.size()+1,0);
+    dp[1]=nums[0];
+    for (int i=2; i<=nums.size(); i++) {
+        dp[i] = max(dp[i-2]+nums[i-1], dp[i-1]);
+    }
+    return dp[nums.size()];
+}
+
+bool isHappy(int n) {
+    map<int, int> _dic = map<int,int>();
+    
+start:
+    int x = 0;
+    while (n / 10 || n > 0) {
+        x += pow(n%10, 2);
+        n = n / 10;
+    }
+    if (_dic.find(x) != _dic.end()) {
+        return false;
+    }else if(x == 1){
+        return true;
+    }else{
+        _dic[x] = x;
+    }
+    
+    n = x;
+    goto start;
+    
+    return false;
+}
+
+ListNode* Solution::removeElements(ListNode* head, int val) {
+    ListNode *warp = new ListNode(0);
+    warp->next = head;
+    ListNode *current = warp;
+
+    while (current) {
+        if(current->next && current->next->val == val){
+            current->next = current->next->next;
+        }else{
+            current = current->next;
+        }
+    }
+    return warp->next;
 }

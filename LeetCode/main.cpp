@@ -53,10 +53,10 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "Hello, World!\n";
     Solution so;
-    vector<int> vector = {2,4,1};
-    so.maxProfit(vector);
-
-    
+    vector<int> vector = {3,2,3};
+//    so.maxProfit(vector);
+//    so.convertToTitle(28);
+    so.titleToNumber("AB");
     return 0;
 }
 
