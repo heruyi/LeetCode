@@ -27,6 +27,19 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL){}
 };
 
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+    
+    Node() {}
+    
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+
 struct CharTreeNode {
     char val;
     CharTreeNode *left;
@@ -152,6 +165,36 @@ public:
     int rob(vector<int>& nums);
     ///203 移除链表元素
     ListNode* removeElements(ListNode* head, int val);
+    ///204 计数质数
+    int countPrimes(int n);
+    ///205 同构字符串
+    bool isIsomorphic(string s, string t);
+    ///219 存在重复元素 II
+    bool containsNearbyDuplicate(vector<int>& nums, int k);
+    ///226 翻转二叉树
+    TreeNode* invertTree(TreeNode* root) ;
+    ///257 二叉树的所有路径
+    vector<string> binaryTreePaths(TreeNode* root);
+    ///258 各位相加
+    int addDigits(int num);
+    ///290 单词规律
+    bool wordPattern(string pattern, string str);
+    ///345 反转字符串中的元音字母
+    string reverseVowels(string s);
+    ///349 两个数组的交集
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2);
+    ///400 第N个数字
+    int findNthDigit(int n);
+    ///405 数字转换为十六进制数
+    string toHex(int num);
+    ///414 第三大的数
+    int thirdMax(vector<int>& nums);
+    ///415字符串相加
+    string addStrings(string num1, string num2);
+    ///429 N叉树的层序遍历
+    vector<vector<int>> levelOrder(Node* root);
+    ///434 字符串中的单词数
+    int countSegments(string s);
 };
 
 #endif /* Solution_hpp */

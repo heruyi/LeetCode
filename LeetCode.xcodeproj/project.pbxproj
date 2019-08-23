@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		58379C6B22584B4A00077714 /* Solution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 58379C6922584B4A00077714 /* Solution.cpp */; };
 		BA680CB02251995800D0DB5D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA680CAF2251995800D0DB5D /* main.cpp */; };
+		BAA0B028230A8E170098BBA3 /* MyStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA0B026230A8E170098BBA3 /* MyStack.cpp */; };
+		BABDEEA5230B97D8005B89EA /* MyQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABDEEA3230B97D8005B89EA /* MyQueue.cpp */; };
+		BABDEEA8230CE40E005B89EA /* NumArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BABDEEA6230CE40E005B89EA /* NumArray.cpp */; };
 		BAD82F352303E44C002BEABB /* MinStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAD82F332303E44C002BEABB /* MinStack.cpp */; };
+		BAED7C93230FEEB7001053A9 /* PathSum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAED7C91230FEEB7001053A9 /* PathSum.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,8 +33,16 @@
 		58379C6A22584B4A00077714 /* Solution.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Solution.hpp; sourceTree = "<group>"; };
 		BA680CAC2251995800D0DB5D /* LeetCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LeetCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA680CAF2251995800D0DB5D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		BAA0B026230A8E170098BBA3 /* MyStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyStack.cpp; sourceTree = "<group>"; };
+		BAA0B027230A8E170098BBA3 /* MyStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyStack.hpp; sourceTree = "<group>"; };
+		BABDEEA3230B97D8005B89EA /* MyQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyQueue.cpp; sourceTree = "<group>"; };
+		BABDEEA4230B97D8005B89EA /* MyQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyQueue.hpp; sourceTree = "<group>"; };
+		BABDEEA6230CE40E005B89EA /* NumArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NumArray.cpp; sourceTree = "<group>"; };
+		BABDEEA7230CE40E005B89EA /* NumArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NumArray.hpp; sourceTree = "<group>"; };
 		BAD82F332303E44C002BEABB /* MinStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinStack.cpp; sourceTree = "<group>"; };
 		BAD82F342303E44C002BEABB /* MinStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinStack.hpp; sourceTree = "<group>"; };
+		BAED7C91230FEEB7001053A9 /* PathSum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PathSum.cpp; sourceTree = "<group>"; };
+		BAED7C92230FEEB7001053A9 /* PathSum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PathSum.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +80,14 @@
 				58379C6A22584B4A00077714 /* Solution.hpp */,
 				BAD82F332303E44C002BEABB /* MinStack.cpp */,
 				BAD82F342303E44C002BEABB /* MinStack.hpp */,
+				BAA0B026230A8E170098BBA3 /* MyStack.cpp */,
+				BAA0B027230A8E170098BBA3 /* MyStack.hpp */,
+				BABDEEA3230B97D8005B89EA /* MyQueue.cpp */,
+				BABDEEA4230B97D8005B89EA /* MyQueue.hpp */,
+				BABDEEA6230CE40E005B89EA /* NumArray.cpp */,
+				BABDEEA7230CE40E005B89EA /* NumArray.hpp */,
+				BAED7C91230FEEB7001053A9 /* PathSum.cpp */,
+				BAED7C92230FEEB7001053A9 /* PathSum.hpp */,
 			);
 			path = LeetCode;
 			sourceTree = "<group>";
@@ -128,9 +148,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BABDEEA8230CE40E005B89EA /* NumArray.cpp in Sources */,
+				BAA0B028230A8E170098BBA3 /* MyStack.cpp in Sources */,
 				BAD82F352303E44C002BEABB /* MinStack.cpp in Sources */,
 				58379C6B22584B4A00077714 /* Solution.cpp in Sources */,
+				BABDEEA5230B97D8005B89EA /* MyQueue.cpp in Sources */,
 				BA680CB02251995800D0DB5D /* main.cpp in Sources */,
+				BAED7C93230FEEB7001053A9 /* PathSum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

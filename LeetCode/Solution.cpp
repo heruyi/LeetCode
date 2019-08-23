@@ -9,7 +9,7 @@
 #include "Solution.hpp"
 #include <string>
 #include <map>
-
+#include <set>
 #include <stack>
 #include <cmath>
 #include <search.h>
@@ -610,8 +610,12 @@ void Solution::rotate(vector<vector<int>>& matrix){
 void Solution::reverseString(vector<char>& s) {
     int i=0,j=(int)s.size()-1;
     while (i<j) {
-        if (s[i] != s[j])
-            swap(s[i], s[j]);
+        if (s[i] != s[j]){
+            s[i] = s[i] ^ s[j];
+            s[j] = s[j] ^ s[i];
+            s[i] = s[i]^s[j];
+        }
+//            swap(s[i], s[j]);
         
         i++;
         j--;
@@ -1537,3 +1541,785 @@ ListNode* Solution::removeElements(ListNode* head, int val) {
     }
     return warp->next;
 }
+
+int Solution::countPrimes(int n) {
+    if(n < 2)
+        return 0;
+    int count = 0;
+    vector<bool> signs(n,true);
+    for (int i=2; i<n; i++) {
+        if (signs[i]) {
+            count++;
+            for (int j=i+i; j<n; j+=i) {
+                signs[j] = false;
+            }
+        }
+    }
+    return count;
+}
+
+bool Solution::isIsomorphic(string s, string t) {
+    
+    //ab ca
+    /**
+    if (s.length() != t.length()) {
+        return false;
+    }
+    map<char, char> _map;
+    map<char, char> reverseMap;
+    int i=0;
+    while (i < s.length()) {
+        
+        char ss = s[i];
+        char tt = t[i];
+        
+        if (_map.find(ss) != _map.end() ) {
+            if (_map[ss] != t[i]) {
+                return false;
+            }
+        }else{
+            if (reverseMap.find(tt) != reverseMap.end()) {
+                return false;
+            }
+            _map[ss] = tt;
+            reverseMap[tt] = ss;
+        }
+        i++;
+    }
+     */
+    size_t length = s.size();
+    vector<int> smap(256, -1);
+    vector<int> tmap(256, -1);
+    for(size_t i = 0; i < length; ++i)
+        {
+        if(smap[s[i]] == -1 && tmap[t[i]] == -1){
+            smap[s[i]] = t[i];
+            tmap[t[i]] = s[i];
+        }
+        else if(smap[s[i]] != t[i] || tmap[t[i]] != s[i])
+            return false;
+    }
+    return true;
+}
+
+bool Solution::containsNearbyDuplicate(vector<int>& nums, int k) {
+    if (nums.size() == 0) {
+        return false;
+    }
+    
+    map<int, size_t> _map;
+    
+    size_t len = nums.size();
+    for (size_t i=0; i<len; i++) {
+        /**
+        if (_map.find(nums[i]) != _map.end()) {
+            if (i - _map[nums[i]] <= k) {
+                return true;
+            }else{
+                _map[nums[i]] = i;
+            }
+        }else{
+            _map[nums[i]] = i;
+        }
+         */
+        if (_map.find(nums[i]) != _map.end()) {
+            return true;
+        }
+        _map[nums[i]] = i;
+        if (_map.size() > k) {
+            _map.erase(nums[i-k]);
+        }
+    }
+    return false;
+}
+
+TreeNode* Solution::invertTree(TreeNode* root) {
+    
+    deque<TreeNode*> queue;
+    queue.push_front(root);
+
+    while (!queue.empty()) {
+        TreeNode *node = queue.front();
+        queue.pop_front();
+        
+        TreeNode *temp = node->left;
+        node->left = node->right;
+        node->right = temp;
+        if (node->left) {
+            queue.push_front(node->left);
+        }
+        if (node->right) {
+            queue.push_front(node->right);
+        }
+    }
+    
+    return root;
+}
+
+bool isPowerOfTwo(int n) {
+    if (n < 1) {
+        return false;
+    }
+    if (n == 1) {
+        return true;
+    }
+    
+    while (n) {
+        int m = n % 2;
+        if (m != 0) {
+            return false;
+        }
+        n /= 2;
+        if (n == 1) {
+            return true;
+        }
+    }
+    
+    return true;
+}
+///235 二叉搜索树的最近公共祖先
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    /**
+    if ((root->val < q->val && root->val < p->val)) {
+        return lowestCommonAncestor(root->right, p, q);
+    }else if ((root->val > q->val && root->val > p->val)){
+        return lowestCommonAncestor(root->left, p, q);
+    }else{
+        return root;
+    }
+     */
+    
+    while (root) {
+        if ((root->val < q->val && root->val < p->val)) {
+            root = root->right;
+        }else if ((root->val > q->val && root->val > p->val)){
+            root = root->left;
+        }else{
+            return root;
+        }
+    }
+    return nullptr;
+}
+/**
+vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> vet;
+    deque<TreeNode*> q;
+    deque<string> s;
+    
+    q.push_back(root);
+    s.push_back(to_string(root->val));
+    while (!q.empty()) {
+        TreeNode *node = q.front();
+        q.pop_front();
+        
+        string str = s.front();
+        s.pop_front();
+        
+        if (node->left) {
+            s.push_back(string(str + "->" + to_string(node->left->val)));
+            q.push_back(node->left);
+        }
+        if (node->right) {
+            s.push_back(string(str + "->" + to_string(node->right->val)));
+            q.push_back(node->right);
+        }
+        if (node->left == nullptr && node->right == nullptr) {
+            vet.push_back(str);
+        }
+    }
+    
+    return vet;
+}
+*/
+vector<string> Solution::binaryTreePaths(TreeNode* root) {
+    vector<string> res;
+    if (!root) return res;
+    
+    string s;
+    s += to_string(root->val);
+    
+    if(!root->left&&!root->right) {
+        res.push_back(s);
+    }
+    
+    
+    if (root->left) {
+        vector<string> left = binaryTreePaths(root->left);
+        for (int i = 0; i < left.size(); ++i) {
+            res.push_back(s + "->" + left[i]);
+        }
+    }
+    
+    if (root->right) {
+        vector<string> right = binaryTreePaths(root->right);
+        for (int j = 0; j < right.size(); ++j) {
+            res.push_back(s + "->" + right[j]);
+        }
+    }
+    
+    return res;
+}
+
+int Solution::addDigits(int num){
+    int x = num;
+    while (num > 9) {
+        x = 0;
+        while (num) {
+            x += num % 10;
+            num = num / 10;
+        }
+        num = x;
+    }
+    return x;
+    
+}
+
+bool Solution::wordPattern(string pattern, string str) {
+
+    vector<string> vet;
+    while (str.length() > 0) {
+        string s = str.substr(0,str.find_first_of(' '));
+        vet.push_back(s);
+        str = str.erase(0, s.length()+1);
+    }
+    if (pattern.length() != vet.size()) {
+        return false;
+    }
+    
+    map<char,string> map1;
+    map<string,char> map2;
+    
+    int i=0;
+    while (i < pattern.length()) {
+        char c = pattern[i];
+        if (map1.find(c) != map1.end()) {
+            if (vet[i] != map1[c]) {
+                return false;
+            }
+        }else{
+            if (map2.find(vet[i]) != map2.end()) {
+                return false;
+            }
+            map1[c] = vet[i];
+            map2[vet[i]] = c;
+        }
+        i++;
+    }
+
+    return true;
+}
+
+
+string Solution::reverseVowels(string s){
+    if (s.length() == 0) {
+        return s;
+    }
+    
+    map<char,char> map{
+        {'a','a'},
+        {'e','e'},
+        {'i','i'},
+        {'o','o'},
+        {'u','u'},
+        {'A','a'},
+        {'E','e'},
+        {'I','i'},
+        {'O','o'},
+        {'U','u'},
+    };
+//    set<char> map{
+//        'a','A','e','E','i','I','o','O','u','U'
+//    };
+    int i = 0, j = (int)s.length() - 1;
+    while (i < j) {
+        while (i < j) {
+            if (map.find(s[i]) != map.end()) {
+                break;
+            }else{
+                i++;
+            }
+        }
+        while (i < j) {
+            if (map.find(s[j]) != map.end()) {
+                break;
+            }else{
+                j--;
+            }
+        }
+        if (i < j && s[i] != s[j]) {
+            s[i] = s[i] ^ s[j];
+            s[j] = s[j] ^ s[i];
+            s[i] = s[i] ^ s[j];
+        }
+        i++;
+        j--;
+    }
+    return s;
+}
+
+
+vector<int> Solution::intersection(vector<int>& nums1, vector<int>& nums2) {
+    /**
+    set<int> vet;
+    size_t i = 0;
+    while (i < nums1.size()) {
+        size_t j = 0;
+        int val = nums1[i];
+        if (vet.find(val) == vet.end()) {
+            while (j < nums2.size()) {
+                if (val == nums2[j]) {
+                    vet.insert(val);
+                    break;
+                }
+                j++;
+            }
+        }
+         i++;
+    }
+    
+    
+     */
+    map<int,int> map;
+    for (int i=0; i<nums1.size(); i++) {
+        map[nums1[i]] = nums1[i];
+    }
+    set<int> vet;
+    for (int i=0; i<nums2.size(); i++) {
+        if (map.find(nums2[i]) != map.end() ) {
+            vet.insert(nums2[i]);
+        }
+    }
+    return vector<int>(vet.begin(),vet.end());
+}
+
+
+bool isPerfectSquare(int num) {
+    long long ans = 0;
+    for(int i = 1 ; ans < num ; i += 2)
+        ans += i;
+    return ans == num;
+}
+
+bool isAnagram(string s, string t) {
+    if (s.size() != t.size()) {
+        return false;
+    }
+    
+    vector<int> vet = vector<int>(256,0);
+    int i = (int)s.size();
+    while (--i >= 0) {
+        vet[s[i]] += 1;
+    }
+    
+    i = (int)t.size();
+    while (--i >= 0) {
+        vet[t[i]] -= 1;
+    }
+    i = (int)vet.size();
+    while (--i >= 0) {
+        if (vet[i] != 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+int getSum(int a, int b) {
+    //不用+运算符实现加法
+    while (b) {
+        auto c = (unsigned int) (a & b) << 1;
+        a = a ^ b;
+        b = c;
+    }
+    return a;
+}
+
+bool canConstruct(string ransomNote, string magazine) {
+    if (ransomNote.size() > magazine.size()) {
+        return false;
+    }
+    int a[256]{0};
+    int i = 0;
+    /**
+    while (i < ransomNote.size()) {
+        a[magazine[i]]++;
+        a[ransomNote[i]]--;
+        i++;
+    }
+    
+    while (i < magazine.size()) {
+        a[magazine[i]]++;
+        i++;
+    }
+     */
+    while (i < magazine.size()) {
+        a[magazine[i]]++;
+        i++;
+    }
+    i = 0;
+    while (i < ransomNote.size()) {
+        if (a[ransomNote[i]]) {
+            a[ransomNote[i]]--;
+        }else{
+            return false;
+        }
+        i++;
+    }
+    /*
+    i = 256;
+    while (--i >= 0) {
+        if (a[i] < 0) {
+            return false;
+        }
+    }
+     */
+    return true;
+}
+
+
+int firstUniqChar(string s) {
+    int a[26]{0};
+    for (int i=0; i<s.size(); i++) {
+        a[s[i] - 'a']++;
+    }
+    for (int i=0; i<s.size(); i++) {
+        if(a[s[i] - 'a']  == 1)
+            return i;
+    }
+    return -1;
+}
+
+char findTheDifference(string s, string t) {
+    char a = 0;
+    for (int i=0; i<s.size(); i++) {
+        a ^= s[i];
+        a ^= t[i];
+    }
+    a ^= t[s.size()];
+    return a;
+}
+
+int Solution:: findNthDigit(int n) {
+    
+//    1*9 * + 2 * 90 + 3 * 990 + 4 * 9990
+//    101112
+    
+    if (n < 10) {
+        return n;
+    }
+    
+    int i = 0;
+    long x = 0;
+    while (x < n) {
+        x += ((i+1) * 9 * pow(10, i));
+        i++;
+    }
+    
+    i--;//数字位数
+    int k = n - (x - ((i+1) * 9 * pow(10, (i))));
+    int j = k / (i+1);
+    int m = k % (i+1);
+    if (m != 0) {
+        j++;
+    }
+    
+    int p = pow(10, i) + j -1;
+    
+    int index = (k-1) % (i+1);
+    
+    string a = to_string(p);
+    char c = a[index];
+    int q = c - '0';
+    return q;
+}
+
+int sumOfLeftLeaves(TreeNode* root) {
+    if (!root) {
+        return 0;
+    }
+    
+    int left =  0;
+    if (root->left && root->left->left == 0 && root->left->right == 0) {
+        left = root->left->val;
+    }
+    return left + sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right);
+}
+
+string Solution::toHex(int num) {
+    
+    if (num == 0) {
+        return "0";
+    }
+    if (num == -2147483648)
+        return "80000000";
+    string str = "";
+    vector<string> vet{"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"};
+    
+    if (num > 0) {
+        while (num) {
+            str.insert(0, vet[num % 16]);
+            num /= 16;
+        }
+        return str;
+    }
+    
+    vector<string> mapb{"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+    int i = 0;
+    num = abs(num);
+    while (num) {
+        str.insert(0, mapb[num % 16]);
+        num /= 16;
+        i++;
+    }
+    while (i<8) {
+        str.insert(0, "0000");
+        i++;
+    }
+    
+    string rev = "";
+    for (int i=0; i<str.length(); i++) {
+        rev.append(str[i] == '0' ? "1":"0");
+    }
+    
+    int k = (int)rev.length();
+    int v = 1;
+    while (--k >= 0 && v) {
+        int s = (rev[k] - '0' + v) % 2;
+        v = (rev[k] - '0' + v) / 2;
+        rev[k] = char('0' + s);
+    }
+    
+    map<string,string> mapf{{"0000","0"},{"0001","1"},{"0010","2"},{"0011","3"},{"0100","4"},{"0101","5"},{"0110","6"},{"0111","7"},{"1000","8"},{"1001","9"},{"1010","a"},{"1011","b"},{"1100","c"},{"1101","d"},{"1110","e"},{"1111","f"}};
+    i = 0;
+    string ss = "";
+    while (i<8) {
+        ss.append(mapf[rev.substr(i*4,4)]);
+        i++;
+    }
+
+    return ss;
+}
+
+int longestPalindrome(string s) {
+    int a[256]{0};
+    int x = 0;
+    for (int i=0; i<s.length(); i++) {
+        a[s[i]]++;
+        if (a[s[i]] == 2) {
+            x += 2;
+            a[s[i]] = 0;
+        }
+    }
+    if (x < s.length()) {
+        x++;
+    }
+    return x;
+}
+
+int Solution::thirdMax(vector<int>& nums) {
+    size_t size = nums.size();
+    
+    vector<int> vet;
+    for (int i=0; i<size; i++) {
+        int x = nums[i];
+        
+        if (vet.size() == 0) {
+            vet.push_back(x);
+        }else if(vet.size() == 1){
+            if (x < vet[0]) {
+                vet.push_back(x);
+            }else if (x > vet[0]){
+                vet.push_back(x);
+                vet[1] = vet[0];
+                vet[0] = x;
+            }
+        }
+        else if(vet.size() == 2){
+            if (x < vet[1]) {
+                vet.push_back(x);
+            }else if(x < vet[0] && x > vet[1]){
+                vet.push_back(x);
+                vet[2] = vet[1];
+                vet[1] = x;
+            }else if(x > vet[0]){
+                vet.push_back(x);
+                vet[2] = vet[1];
+                vet[1] = vet[0];
+                vet[0] = x;
+            }
+        }
+        else if(vet.size() == 3){
+            if (x > vet[2] && x < vet[1]) {
+                vet[2] = x;
+            }else if (x > vet[1] && x < vet[0]){
+                vet[2] = vet[1];
+                vet[1] = x;
+            }else if(x > vet[0]){
+                vet[2] = vet[1];
+                vet[1] = vet[0];
+                vet[0] = x;
+            }
+        }
+    }
+    if (vet.size() >= 3) {
+       return vet.back();
+    }
+    return vet.front();
+}
+
+string Solution::addStrings(string num1, string num2) {
+    string str = "";
+    int i = (int)num1.size() -1;
+    int j = (int)num2.size() -1;
+    int v = 0;
+    
+    while (i >= 0 || j >= 0) {
+        
+        int s = 0;
+        if (j >= 0)
+            s = (num2[j] - '0');
+        
+        int t = 0;
+        if (i >= 0)
+            t = (num1[i] - '0');
+        
+        int k = s + t + v;
+        int r = k % 10;
+        v = k / 10;
+        
+        str.insert(str.begin(), char(r+'0'));
+        i--;
+        j--;
+    }
+    if (v) {
+        str.insert(str.begin(), char(v+'0'));
+    }
+    
+    return str;
+}
+
+vector<vector<int>> Solution::levelOrder(Node* root) {
+    vector<vector<int>> vv;
+    if (root == nullptr) {
+        return vv;
+    }
+    
+    
+    deque<Node*> q;
+    q.push_back(root);
+    Node *last = root;
+    
+    vector<int> v;
+    while (!q.empty()) {
+        Node *node = q.front();
+        q.pop_front();
+        
+        v.push_back(node->val);
+        
+        q.insert(q.end(), node->children.begin(),node->children.end());
+        
+        if (node == last) {
+            last = q.back();
+            vv.push_back(vector<int>(v));
+            v.clear();
+        }
+    }
+    return vv;
+}
+
+int Solution::countSegments(string s) {
+    int count = 0;
+    long i = 0;
+    bool sig = false;
+    while (i < s.length()) {
+        if (sig && s[i] == ' ') {
+            count++;
+        }
+        sig = s[i] != ' ';
+        i++;
+    }
+    if (sig) {
+        count++;
+    }
+    return count;
+}
+
+
+bool hasPathSum(TreeNode* root, int sum) {
+    if (root == nullptr) {
+        return false;
+    }
+    
+    int val = sum - root->val;
+    
+    if (!root->left && !root->right) {
+        return val == 0;
+    }
+    
+    return hasPathSum(root->left, val) || hasPathSum(root->right, val );
+}
+
+/**
+ 
+层序遍历 解法
+ 113 给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
+vector<vector<int>> pathSum(TreeNode* root, int sum) {
+    
+    if (!root) {
+        return vector<vector<int>>();
+    }
+    
+    deque<TreeNode *> dq;
+    dq.push_back(root);
+    
+    deque<int> sm;
+    sm.push_back(root->val);
+    
+    vector<int> v;
+    v.push_back(root->val);
+    
+    deque<vector<int>> dv;
+    dv.push_back(v);
+    
+    vector<vector<int>> result;
+    
+    while (!dq.empty()) {
+        
+        TreeNode *node = dq.front();
+        dq.pop_front();
+        
+        vector<int> vet = dv.front();
+        dv.pop_front();
+        
+        int _sum = sm.front();
+        sm.pop_front();
+        
+        if (!node->left && !node->right && sum == _sum) {
+            result.push_back(vector<int>(vet));
+        }
+        
+        if (node->left) {
+            vector<int> ln = vector<int>(vet);
+            ln.push_back(node->left->val);
+            
+            dv.push_back(ln);
+            sm.push_back(_sum+node->left->val);
+            
+            dq.push_back(node->left);
+        }
+        
+        if (node->right) {
+            vector<int> rn = vector<int>(vet);
+            rn.push_back(node->right->val);
+            
+            dv.push_back(rn);
+            sm.push_back(_sum+node->right->val);
+            
+            dq.push_back(node->right);
+        }
+    }
+    
+    return result;
+}
+*/
