@@ -85,7 +85,7 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     
     std::cout << "Hello, World!\n";
-    Solution1 so;
+    Solution so;
 //    vector<int> vector = {3,2,3};
 //    so.maxProfit(vector);
 //    so.convertToTitle(28);
@@ -108,8 +108,8 @@ int main(int argc, const char * argv[]) {
     d.left = &g;
     d.right = &h;
     e.right = &i;
-    
-    so.pathSum(&a, 8);
+    vector<char> cc{'a','a','b','b','c','c','c'};
+    so.compress(cc);
 //    so.binaryTreePaths(&root);
 //    so.reverseVowels("leetcode");
     vector<int> vec = {3,2,1};

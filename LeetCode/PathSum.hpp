@@ -14,6 +14,9 @@
 
 class Solution1 {
 public:
+    
+    /**
+    
     int pathSum(TreeNode* root, int sum) {
         if(!root) return 0;
         res = 0;
@@ -38,6 +41,32 @@ private:
         dfs(root->left, sum - root->val);
         dfs(root->right, sum - root->val);
         return ;
+    }
+     
+     */
+    int res;
+    int pathSum(TreeNode* root, int sum) {
+        if (!root) {
+            return 0;
+        }
+        
+        res = 0;
+        map<int,int> map; // map<currentSum,sumCount>
+        map[0] = 1;
+        findPath(root, sum, 0, map);
+        return res;
+    }
+    
+    void findPath(TreeNode *root,int sum,int currentSum,map<int,int> &map){
+        if (!root) {
+            return;
+        }
+        currentSum = currentSum + root->val;
+        res += map[currentSum - sum];
+        map[currentSum]++;
+        findPath(root->left, sum, currentSum, map);
+        findPath(root->right, sum, currentSum, map);
+        map[currentSum]--;
     }
 };
 

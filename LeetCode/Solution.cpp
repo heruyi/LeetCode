@@ -2323,3 +2323,156 @@ vector<vector<int>> pathSum(TreeNode* root, int sum) {
     return result;
 }
 */
+
+
+vector<int> Solution::findAnagrams(string s, string p) {
+    vector<int> vet;
+    int left = 0, right = 0;
+    int match = 0;
+    map<char,int>needs;
+    map<char,int>windows;
+    for (int i=0; i<p.size(); i++) {
+        needs[p[i]]++;
+    }
+    
+    while (right < s.length()) {
+        if (needs.count(s[right])) {
+            windows[s[right]]++;
+            if (windows[s[right]] == needs[s[right]]) {
+                match++;
+            }
+        }
+        right++;
+        
+        while (match == needs.size()) {
+            
+            if (right - left == p.size()) {
+                vet.push_back(left);
+            }
+            
+            if (windows.count(s[left])) {
+                windows[s[left]]--;
+                if (windows[s[left]] < needs[s[left]]) {
+                    match--;
+                }
+            }
+            left++;
+        }
+    }
+    
+    return vet;
+}
+
+
+int Solution::arrangeCoins(int n) {
+    /**
+    if (n == 0) {
+        return 0;
+    }
+    int i=1;
+    long res = 0;
+    for (; i<n; i++) {
+        res +=i;
+        if (res > n) {
+            return --i;
+        }
+    }
+    return --i;
+     */
+    
+//    1+2+3+4+5+....n = (n * (n+1)) / 2;
+    
+    int left = 0,right = n;
+    while (left < right) {
+        int mid = left + (right + 1 - left) / 2;
+        if (((mid * (mid+1)) >> 1) > n) {
+            right = mid - 1;
+        }else{
+            left = mid;
+        }
+    }
+    return right;
+}
+
+int Solution::compress(vector<char>& chars) {
+    int left =0, right=0, current =0;
+    while (right < chars.size()) {
+        while (chars[left] == chars[right] && right < chars.size()) {
+            right++;
+        }
+        
+        chars[current] = chars[left];
+        if (right - left > 1) {
+            chars[current+1] = right - left + '0';
+            current += 2;
+        }else{
+            current += 1;
+        }
+        left = right;
+    }
+    
+    return current;
+
+}
+
+ListNode* Solution::addTwoNumbers(ListNode* l1, ListNode* l2) {
+    
+    stack<ListNode*> stk1;
+    stack<ListNode*> stk2;
+    while (l1) {
+        stk1.push(l1);
+        l1=l1->next;
+    }
+    while (l2) {
+        stk2.push(l2);
+        l2=l2->next;
+    }
+    
+    ListNode *ll1 = nullptr;
+    ListNode *ll2 = nullptr;
+    int val = 0;
+    bool gl = stk1.size() >= stk2.size();
+    while (!stk1.empty() && !stk2.empty()) {
+        
+        ll1=stk1.top();
+        ll2=stk2.top();
+        stk1.pop();
+        stk2.pop();
+        
+        int m = (ll1->val + ll2->val + val) % 10;
+        val = (ll1->val + ll2->val + val) / 10;
+        if (gl) {
+            ll1->val = m;
+        }else{
+            ll2->val = m;
+        }
+    }
+    
+    while (!stk1.empty()) {
+        ll1 = stk1.top();
+        stk1.pop();
+        int m = (ll1->val + val) % 10;
+        val = (ll1->val+ val) / 10;
+        ll1->val = m;
+    }
+    
+    while (!stk2.empty()) {
+        ll2 = stk2.top();
+        stk2.pop();
+        int m = ( ll2->val + val) % 10;
+        val = ( ll2->val + val) / 10;
+        ll2->val = m;
+    }
+    
+    if (val) {
+        ListNode* root = new ListNode(1);
+        if (gl) {
+            root->next = ll1;
+        }else{
+            root ->next = ll2;
+        }
+        return root;
+    }
+    
+    return gl ? ll1 : ll2;
+}

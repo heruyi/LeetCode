@@ -195,6 +195,14 @@ public:
     vector<vector<int>> levelOrder(Node* root);
     ///434 字符串中的单词数
     int countSegments(string s);
+    ///438. 找到字符串中所有字母异位词
+    vector<int> findAnagrams(string s, string p);
+    ///441 排列硬币
+    int arrangeCoins(int n);
+    ///443.压缩字符串
+    int compress(vector<char>& chars);
+    ///445.两数相加 II
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
 };
 
 #endif /* Solution_hpp */
