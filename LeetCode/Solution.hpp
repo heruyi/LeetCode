@@ -27,6 +27,21 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL){}
 };
 
+typedef struct _Point{
+public:
+    int x;
+    int y;
+    _Point(int x,int y) : x(x), y(y) {};
+    _Point(){}
+}_Point;
+
+struct cmplKey{
+public:
+    bool operator()(const _Point &k1, const _Point &k2) const {
+        return (k1.x != k2.x || k1.y != k2.y);
+    }
+};
+
 class Node {
 public:
     int val;
@@ -203,6 +218,12 @@ public:
     int compress(vector<char>& chars);
     ///445.两数相加 II
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
+    ///447.回旋镖的数量
+    int numberOfBoomerangs(vector<vector<int>>& points);
+    ///448.找到所有数组中消失的数字
+    vector<int> findDisappearedNumbers(vector<int>& nums);
+    ///459.重复的字符串
+    bool repeatedSubstringPattern(string s);
 };
 
 #endif /* Solution_hpp */

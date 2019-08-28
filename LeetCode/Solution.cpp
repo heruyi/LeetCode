@@ -2476,3 +2476,60 @@ ListNode* Solution::addTwoNumbers(ListNode* l1, ListNode* l2) {
     
     return gl ? ll1 : ll2;
 }
+
+
+int Solution::numberOfBoomerangs(vector<vector<int>>& points) {
+    // 解法错误
+    map<_Point, _Point,cmplKey> map;
+    
+    for (int i=0; i<points.size(); i++) {
+        vector<int> t = points[i];
+        _Point p = _Point(t[0],t[1]);
+        map[p] = p;
+    }
+    
+    int count = 0;
+    for (int i=0; i<points.size(); i++) {
+        vector<int> v1 = points[i];
+        for (int j = i+1; j<points.size(); j++) {
+            vector<int> v2 = points[j];
+            vector<int> cnt = vector<int>{(v1[0] + v2[0])/2,(v1[1] + v2[1])/2};
+            _Point s = _Point(cnt[0], cnt[1]);
+            if ((cnt[0] != v1[0] || cnt[1] != v1[1]) && (cnt[0] != v2[0] || cnt[1] != v2[1]) && map.find(s) != map.end()) {
+                count += 2;
+            }
+        }
+    }
+    return count;
+}
+
+vector<int> Solution::findDisappearedNumbers(vector<int>& nums) {
+    //将
+    
+    vector<int > vet;
+    for (int i=0; i<nums.size(); i++) {
+        int index = (nums[i]-1) % nums.size();
+        nums[index] += (int)nums.size();
+    }
+    for (int i=0; i<nums.size(); i++) {
+        if (nums[i] <= nums.size()) {
+            vet.push_back(i+1);
+        };
+    }
+    return vet;
+}
+
+bool Solution::repeatedSubstringPattern(string s) {
+    int len = (int)s.size(),i = 0, t = 0;
+    for (t=1; t<len/2; t++) {
+        if (len % t) {//有余数 不为周期串
+            continue;
+        }
+        for (i=t; i<len && s[i%t] == s[i]; i++);
+        if (i == len) {
+            return true;
+        }
+    }
+    
+    return false;
+}

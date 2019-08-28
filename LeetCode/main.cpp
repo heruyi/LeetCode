@@ -108,8 +108,16 @@ int main(int argc, const char * argv[]) {
     d.left = &g;
     d.right = &h;
     e.right = &i;
-    vector<char> cc{'a','a','b','b','c','c','c'};
-    so.compress(cc);
+    vector<char> ccc{'a','a','b','b','c','c','c'};
+    
+    vector<int> aa{0,0};
+    vector<int> bb{1,0};
+    vector<int> cc{-1,0};
+    vector<int> dd{0,1};
+    vector<int> ee{0,-1};
+    vector<vector<int>>ff{aa,bb,cc,dd,ee};
+    vector<int>ac{4,3,2,7,8,2,3,1};
+    so.findDisappearedNumbers(ac);
 //    so.binaryTreePaths(&root);
 //    so.reverseVowels("leetcode");
     vector<int> vec = {3,2,1};
