@@ -224,6 +224,22 @@ public:
     vector<int> findDisappearedNumbers(vector<int>& nums);
     ///459.重复的字符串
     bool repeatedSubstringPattern(string s);
+    ///475.供暖器
+    int findRadius(vector<int>& houses, vector<int>& heaters);
+    ///476.数字的补数
+    int findComplement(int num);
+    ///482.密匙格式化
+    string licenseKeyFormatting(string S, int K);
+    ///485.最大的连续1的个数
+    int findMaxConsecutiveOnes(vector<int>& nums);
+    ///492.构造矩形
+    vector<int> constructRectangle(int area);
+    ///下一个更大元素
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2);
+    ///500.键盘行
+    vector<string> findWords(vector<string>& words);
+    ///506.相对名次
+    vector<string> findRelativeRanks(vector<int>& nums);
 };
 
 #endif /* Solution_hpp */

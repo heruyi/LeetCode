@@ -2533,3 +2533,228 @@ bool Solution::repeatedSubstringPattern(string s) {
     
     return false;
 }
+
+int findRadius(vector<int>& houses, vector<int>& heaters) {
+    sort(heaters.begin(), heaters.end());
+    int ans = 0;
+    for (int i=0; i<houses.size(); i++) {
+        int cur = INT_MAX;
+        // lower_bound 返回第一个大于等于这个元素的迭代器
+        // 此时larger就是这座房子右边的供暖器
+        //使用*larger 来取值或者heaters[larger-heaters.begin()]
+        auto larger = lower_bound(heaters.begin(), heaters.end(), houses[i]);
+        if (larger != heaters.end()) {
+            //如果存在 那么久计算他们之间的距离
+            cur = *larger - houses[i];
+        }
+        //如果这个房子没有小于最开始的取暖器 那么意味着它左边也有一个供暖器
+        if (larger != heaters.begin()) {
+            auto smaller = larger - 1;//相当于取迭代器前面一个元素;
+            cur = min(cur,houses[i] - *smaller);
+        }
+        ans = max(cur,ans);
+    }
+    return ans;
+}
+
+int Solution::findComplement(int num) {
+    
+    // 0101
+    int ans = 0;
+    int i = 0;
+    while (num) {
+        int x = (num & 1) ? 0 : 1;
+        ans = (x << i) | ans;
+        num >>= 1;
+    }
+    return ans;
+}
+
+string Solution::licenseKeyFormatting(string S, int K) {
+    
+//    string ans = "";
+//    int n = 0, j = 0;
+//    while(S[j] == '-') j++;
+//    for(int i = S.size() - 1; i >= j; i--){
+//        if(S[i] == '-') continue;
+//        ans += toupper(S[i]);
+//        if( !(++n % K) && i != j) ans += '-';
+//    }
+//    ::reverse(ans.begin(), ans.end());
+//    return ans;
+    
+
+//    for (auto it=S.begin(); it != S.end(); it++) {
+//        if (*it == '-') {
+//            S.erase(it);
+//            it--;
+//        }
+//    }
+    
+    int begin = (int)S.size() - 1, count = 0;
+    
+    string res = "";
+    
+    for (int i = begin; i >= 0; i--) {
+        
+        
+        char c = S[i];
+        if (c == '-') continue;
+        if (c >= 'a' && c <= 'z') {
+            c += 'A' - 'a';
+        }
+        
+        res += c;
+        count++;
+        if (count % K == 0) {
+            res += '-';
+        }
+    }
+    ::reverse(res.begin(), res.end());
+    if (*res.begin() == '-') {
+        res.erase(res.begin());
+    }
+    
+    return res;
+}
+
+int Solution::findMaxConsecutiveOnes(vector<int>& nums) {
+    int num = 0;
+    int count = 0;
+    for (int i=0; i<nums.size(); i++) {
+        if (nums[i] == 1) {
+            count++;
+        }else{
+            num = max(num,count);
+            count = 0;
+        }
+    }
+    num = max(num,count);
+    return num;
+}
+
+vector<int> Solution::constructRectangle(int area) {
+    
+    vector<int> vet;
+    return vet;
+}
+
+
+vector<int> Solution:: nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    /** 暴利破解
+    vector<int> vet;
+    map<int, int> map;
+    for (int i=0; i<nums1.size(); i++) {
+        int val = nums1[i];
+        
+        bool eq = false;
+        bool find = false;
+        int index = map[val];
+        for (int idx = index; idx < nums2.size(); idx++) {
+            map[nums2[idx]] = idx;
+            if (nums2[idx] == val) {
+                eq = true;
+                continue;
+            }
+            if (eq && nums2[idx] > val) {
+                vet.push_back(nums2[idx]);
+                find = true;
+                break;
+            }
+        }
+        if (!find) {
+            vet.push_back(-1);
+        }
+    }
+    return vet;
+     */
+    
+     // 4 1 2     1 3 4 2
+    vector<int> output;//保存答案
+    map<int,int> mp;//元素为数组2的元素，值为数组2内比该元素更大的元素（如不不存在则为-1）
+    stack<int> s;//单调栈
+    
+    for (int i= (int)nums2.size()-1; i>=0; i--) {
+        int val = nums2[i];
+        while (!s.empty() && s.top() < val) {
+            s.pop();
+        }
+
+        mp[val] = s.empty() ? -1 : s.top();
+        s.push(val);
+    }
+    
+    for (int i=0; i<nums1.size(); i++) {
+        int val = nums1[i];
+        output.push_back(mp[val]);
+    }
+    
+    return output;
+    
+}
+
+vector<string> Solution::findWords(vector<string>& words) {
+    vector<string> vet;
+    if (words.size() == 0) {
+        return vet;
+    }
+    
+    int arr[] = {1,2,2,1,0,1,1, 1,0,1,1,1,2,2, 0,0,0, 0,1,0, 0,2,0, 2,0,2};
+    for (int i=0; i<words.size(); i++) {
+        string s = words[i];
+        if (s.size() == 1) {
+            vet.push_back(s);
+            continue;
+        }
+        int j=1;
+        for (;j<s.size(); j++){
+            int c1 = std::tolower(s[j]);
+            int c2 = std::tolower(s[j-1]);
+            if (arr[c1  - 'a'] != arr[c2 - 'a']) {
+                break;
+            }
+        }
+        
+        if (j==s.length()) {
+            vet.push_back(s);
+        }
+    }
+    return vet;
+}
+
+struct _Comp{
+public:
+    bool operator()(const int &k1, const int &k2) const {
+        return (k1 > k2);
+    }
+};
+
+vector<string> Solution::findRelativeRanks(vector<int>& nums) {
+    map<int,int,_Comp>  map; // <value,index>
+    for (int i=0; i<nums.size(); i++) {
+        map[nums[i]] = i;
+    }
+    
+    sort(nums.begin(), nums.end(), _Comp());
+    
+    vector<string> vet(nums.size(),"");
+    
+    for (int i=0; i<nums.size(); i++) {
+        
+        int index = map[nums[i]];
+        if(i < 3){
+            if (i == 0) {
+                vet[index] = "Gold Medal";
+            }else if (i == 1){
+                vet[index] = "Silver Medal";
+            }else if (i == 2){
+                vet[index] = "Bronze Medal";
+            }
+        }
+        else{
+            vet[index] = to_string(i+1);
+        }
+    }
+    
+    return vet;
+}

@@ -75,9 +75,17 @@
 		BA680CAE2251995800D0DB5D /* LeetCode */ = {
 			isa = PBXGroup;
 			children = (
+				BAB607C523176A3F00362895 /* New Group */,
 				BA680CAF2251995800D0DB5D /* main.cpp */,
-				58379C6922584B4A00077714 /* Solution.cpp */,
 				58379C6A22584B4A00077714 /* Solution.hpp */,
+				58379C6922584B4A00077714 /* Solution.cpp */,
+			);
+			path = LeetCode;
+			sourceTree = "<group>";
+		};
+		BAB607C523176A3F00362895 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
 				BAD82F332303E44C002BEABB /* MinStack.cpp */,
 				BAD82F342303E44C002BEABB /* MinStack.hpp */,
 				BAA0B026230A8E170098BBA3 /* MyStack.cpp */,
@@ -89,7 +97,7 @@
 				BAED7C91230FEEB7001053A9 /* PathSum.cpp */,
 				BAED7C92230FEEB7001053A9 /* PathSum.hpp */,
 			);
-			path = LeetCode;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

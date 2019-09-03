@@ -13,6 +13,8 @@
 #include <stack>
 #include "Solution.hpp"
 #include "PathSum.hpp"
+
+
 using namespace std;
 
 void mystery(int n){
@@ -117,7 +119,13 @@ int main(int argc, const char * argv[]) {
     vector<int> ee{0,-1};
     vector<vector<int>>ff{aa,bb,cc,dd,ee};
     vector<int>ac{4,3,2,7,8,2,3,1};
-    so.findDisappearedNumbers(ac);
+    
+    vector<int> num1 {4,1,2};
+    vector<int> num2 {1,3,4,2};
+    vector<string> vt {"Hello","Alaska","Dad","Peace"};
+    
+    vector<int> vvv{10,3,8,9,4};
+    so.findRelativeRanks(vvv);
 //    so.binaryTreePaths(&root);
 //    so.reverseVowels("leetcode");
     vector<int> vec = {3,2,1};
