@@ -2758,3 +2758,63 @@ vector<string> Solution::findRelativeRanks(vector<int>& nums) {
     
     return vet;
 }
+
+bool Solution::detectCapitalUse(string word) {
+    
+    if (word.size() < 2) {
+        return true;
+    }
+    
+    bool hasL = false; //含有小写字母
+    int lastH = -1; //上次的大写字母位置
+    for (int i=0; i<word.size(); i++) {
+        char c = word[i];
+        if (c >= 'a' && c <= 'z') {
+            if (lastH > 0) {
+                return false;
+            }
+            hasL = true;
+        }
+        if (c >= 'A' && c <= 'Z') {
+            
+            if (hasL) {
+                return false;
+            }
+            lastH = i;
+        }
+    }
+    
+    return true;
+}
+
+int Solution::findPairs(vector<int>& nums, int k) {
+    int count = 0;
+    if (nums.size() == 0) {
+        return count;
+    }
+    sort(nums.begin(), nums.end());
+    for (int index=0; index<nums.size()-1; index++) {
+        int i = nums[index];
+        int j = i+k;
+        if (index > 0 && nums[index-1] == i) {
+            continue;
+        }
+        int start = index+1;
+        int end = (int)nums.size()-1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] == j) {
+                count++;
+                break;
+            }else if (nums[mid] > j){
+                end = mid-1;
+            }else{
+                start = mid+1;
+            }
+        }
+    }
+    
+    return count;
+}
+
+

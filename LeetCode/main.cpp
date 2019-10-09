@@ -85,6 +85,7 @@ vector<vector<int>> pathSum(TreeNode* root, int sum) {
 
 int main(int argc, const char * argv[]) {
     // insert code here...
+
     
     std::cout << "Hello, World!\n";
     Solution so;
@@ -124,13 +125,14 @@ int main(int argc, const char * argv[]) {
     vector<int> num2 {1,3,4,2};
     vector<string> vt {"Hello","Alaska","Dad","Peace"};
     
-    vector<int> vvv{10,3,8,9,4};
-    so.findRelativeRanks(vvv);
+    vector<int> vvv{3,1,4,1,5};
+    so.findPairs(vvv,2);
 //    so.binaryTreePaths(&root);
 //    so.reverseVowels("leetcode");
     vector<int> vec = {3,2,1};
 //    so.countSegments("Hello, my name is John");
     return 0;
+ 
 }
 
 //TreeNode * arrayToTree(vector<int> *vet){

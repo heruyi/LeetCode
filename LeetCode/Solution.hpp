@@ -240,6 +240,12 @@ public:
     vector<string> findWords(vector<string>& words);
     ///506.相对名次
     vector<string> findRelativeRanks(vector<int>& nums);
+    ///520.检测大写字母
+    bool detectCapitalUse(string word) ;
+    ///532.数组中的K-diff数对
+    int findPairs(vector<int>& nums, int k);
+    ///538.把二叉搜索树转换为累加树
+    TreeNode* convertBST(TreeNode* root);
 };
 
 #endif /* Solution_hpp */
