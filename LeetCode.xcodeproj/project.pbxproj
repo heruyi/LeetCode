@@ -126,7 +126,7 @@
 		BA680CA42251995800D0DB5D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = henry;
 				TargetAttributes = {
 					BA680CAB2251995800D0DB5D = {
@@ -140,6 +140,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = BA680CA32251995800D0DB5D;
 			productRefGroup = BA680CAD2251995800D0DB5D /* Products */;
@@ -283,6 +284,7 @@
 		BA680CB42251995800D0DB5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 76ZRH6W722;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -292,6 +294,7 @@
 		BA680CB52251995800D0DB5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 76ZRH6W722;
 				PRODUCT_NAME = "$(TARGET_NAME)";
