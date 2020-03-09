@@ -246,6 +246,8 @@ public:
     int findPairs(vector<int>& nums, int k);
     ///538.把二叉搜索树转换为累加树
     TreeNode* convertBST(TreeNode* root);
+	///快速排序
+	void quickSort(vector<int> &v,int low,int high);
 };
 
 #endif /* Solution_hpp */

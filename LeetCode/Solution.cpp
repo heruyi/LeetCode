@@ -2817,4 +2817,28 @@ int Solution::findPairs(vector<int>& nums, int k) {
     return count;
 }
 
+int findPosion(vector<int> &v,int low,int high){
+	
+	int tmp = v[low];
+	while (low < high) {
+		while (low < high && v[high] >= tmp) {
+			high--;
+		}
+		v[low] = v[high];
+		while (low < high && v[low] < tmp) {
+			low++;
+		}
+		v[high] = v[low];
+	}
+	v[low] = tmp;
+		
+	return low;
+}
 
+void Solution::quickSort(vector<int> &v,int low,int high) {
+	if (low < high) {
+		int index = findPosion(v, low, high);
+		quickSort(v,low,index-1);
+		quickSort(v,index+1,high);
+	}
+}
