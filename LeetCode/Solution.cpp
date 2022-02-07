@@ -14,6 +14,7 @@
 #include <cmath>
 #include <search.h>
 #include <iostream>
+#include <numeric>
 
 int Solution::removeElement(vector<int>& nums, int val){
     
@@ -2841,4 +2842,21 @@ void Solution::quickSort(vector<int> &v,int low,int high) {
 		quickSort(v,low,index-1);
 		quickSort(v,index+1,high);
 	}
+}
+
+int Solution::findSubstringInWraproundString(string p) {
+	if (p.size() == 0) {
+		return 0;
+	}
+	vector<int> dp(26, 0);
+	int cnt = 0;
+	for (int i = 0; i < p.size(); i++) {
+		if (i > 0 && ((p[i] - p[i-1] == 1) || (p[i-1] - p[i] == 'z' - 'a'))) {
+			cnt += 1;
+		}else{
+			cnt = 1;
+		}
+		dp[p[i] - 'a'] = max(dp[p[i] - 'a'], cnt);
+	}
+	return std::accumulate(dp.begin(), dp.end(), 0);
 }
